@@ -1,0 +1,43 @@
+<div [ngClass]="containerClasses()">
+  <label [attr.for]="id()" class="checkbox-label">
+    <input
+      [id]="id()"
+      type="checkbox"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      [required]="required()"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="error() || helpText() ? id() + '-desc' : null"
+      [indeterminate]="indeterminate()"
+      class="checkbox-input"
+      (change)="onToggle($event)"
+      (keydown)="onKeyDown($event)">
+
+    <div [ngClass]="checkboxClasses()">
+      @if (checked()) {
+        <span class="checkbox-icon" aria-hidden="true">✓</span>
+      }
+      @if (indeterminate()) {
+        <span class="checkbox-icon" aria-hidden="true">−</span>
+      }
+    </div>
+
+    @if (label()) {
+      <span class="checkbox-text">
+        {{ label() }}
+        @if (required()) {
+          <span class="checkbox-required" aria-label="required">*</span>
+        }
+      </span>
+    }
+  </label>
+
+  @if (error() || helpText()) {
+    <div
+      [id]="id() + '-desc'"
+      class="checkbox-description"
+      [class.checkbox-error-message]="error()">
+      {{ error() || helpText() }}
+    </div>
+  }
+</div>

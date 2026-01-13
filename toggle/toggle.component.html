@@ -1,0 +1,36 @@
+<label
+  [ngClass]="containerClasses()"
+  [attr.for]="id()">
+
+  <!-- Label (Left) -->
+  @if (label() && labelPosition() === 'left') {
+    <span class="toggle-label toggle-label-left">
+      {{ label() }}
+    </span>
+  }
+
+  <!-- Toggle Switch -->
+  <div class="toggle-wrapper">
+    <input
+      type="checkbox"
+      [id]="id()"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      [attr.aria-label]="effectiveAriaLabel()"
+      [attr.aria-checked]="checked()"
+      class="toggle-input"
+      (change)="onToggle($event)"
+      (keydown)="onKeyDown($event)">
+
+    <div [ngClass]="toggleClasses()">
+      <div class="toggle-slider"></div>
+    </div>
+  </div>
+
+  <!-- Label (Right) -->
+  @if (label() && labelPosition() === 'right') {
+    <span class="toggle-label toggle-label-right">
+      {{ label() }}
+    </span>
+  }
+</label>

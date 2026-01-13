@@ -1,0 +1,446 @@
+/* ============================================
+   KPI Card Component Styles
+   Design System A
+   ============================================ */
+
+/* ========================================
+   Base Card Styles
+   ======================================== */
+
+.kpi-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+  padding: var(--space-5, 24px);
+  background: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+  transition: all var(--transition-base, 200ms ease-in-out);
+  overflow: hidden;
+}
+
+/* Hover effect */
+.kpi-card:hover {
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04));
+}
+
+/* ========================================
+   Clickable State
+   ======================================== */
+
+.kpi-card.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.kpi-card.clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04));
+  border-color: var(--color-primary, #6366F1);
+}
+
+.kpi-card.clickable:active {
+  transform: translateY(0);
+}
+
+.kpi-card.clickable:focus-visible {
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   Header Section
+   ======================================== */
+
+.kpi-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+}
+
+.kpi-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  flex: 1;
+  min-width: 0;
+}
+
+.kpi-icon {
+  font-size: 24px;
+  line-height: 1;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--color-surface-secondary, #F5F7FA);
+  border-radius: var(--radius-md, 12px);
+  transition: all var(--transition-base, 200ms ease-in-out);
+}
+
+.kpi-card:hover .kpi-icon {
+  background: var(--color-primary-soft, #E0E7FF);
+}
+
+.kpi-label {
+  font-size: var(--text-sm, 14px);
+  font-weight: var(--font-medium, 500);
+  color: var(--color-text-secondary, #4B5563);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+/* ========================================
+   Body Section (Value & Trend)
+   ======================================== */
+
+.kpi-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.kpi-value {
+  font-size: 2rem;
+  font-weight: var(--font-bold, 700);
+  color: var(--color-text-primary, #1F2937);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  word-break: break-word;
+}
+
+/* ========================================
+   Trend Indicator
+   ======================================== */
+
+.kpi-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 6px);
+  padding: var(--space-2, 6px) var(--space-3, 12px);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm, 6px);
+  font-size: var(--text-sm, 13px);
+  font-weight: var(--font-medium, 500);
+  line-height: 1;
+  transition: all var(--transition-fast, 150ms ease-in-out);
+  cursor: pointer;
+  width: fit-content;
+  font-family: inherit;
+}
+
+.kpi-trend:hover {
+  background: var(--color-surface-secondary, #F5F7FA);
+}
+
+.kpi-trend:focus-visible {
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: 2px;
+}
+
+.kpi-trend-arrow {
+  font-size: 14px;
+  font-weight: var(--font-bold, 700);
+}
+
+.kpi-trend-value {
+  font-weight: var(--font-semibold, 600);
+}
+
+.kpi-trend-label {
+  color: var(--color-text-muted, #6B7280);
+  margin-left: 2px;
+}
+
+/* Trend Colors */
+.kpi-trend.positive {
+  color: var(--color-success, #10B981);
+}
+
+.kpi-trend.positive:hover {
+  background: var(--color-success-light, #D1FAE5);
+}
+
+.kpi-trend.negative {
+  color: var(--color-danger, #EF4444);
+}
+
+.kpi-trend.negative:hover {
+  background: var(--color-danger-light, #FEE2E2);
+}
+
+.kpi-trend.neutral {
+  color: var(--color-text-secondary, #4B5563);
+}
+
+.kpi-trend.neutral:hover {
+  background: var(--color-surface-secondary, #F5F7FA);
+}
+
+/* ========================================
+   Sparkline Chart
+   ======================================== */
+
+.kpi-sparkline-mini {
+  width: 60px;
+  height: 30px;
+  opacity: 0.6;
+  transition: opacity var(--transition-base, 200ms ease-in-out);
+}
+
+.kpi-card:hover .kpi-sparkline-mini {
+  opacity: 1;
+}
+
+.kpi-sparkline-chart {
+  width: 100%;
+  height: 60px;
+  margin-top: var(--space-2, 8px);
+}
+
+.kpi-sparkline-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.kpi-sparkline-path {
+  stroke: var(--color-primary, #6366F1);
+  transition: stroke var(--transition-base, 200ms ease-in-out);
+}
+
+.kpi-sparkline-area {
+  opacity: 1;
+  transition: opacity var(--transition-base, 200ms ease-in-out);
+}
+
+.kpi-sparkline-point {
+  opacity: 0;
+  transition: opacity var(--transition-base, 200ms ease-in-out);
+}
+
+.kpi-card:hover .kpi-sparkline-point {
+  opacity: 1;
+}
+
+/* ========================================
+   Click Indicator
+   ======================================== */
+
+.kpi-click-indicator {
+  position: absolute;
+  top: var(--space-4, 16px);
+  right: var(--space-4, 16px);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted, #6B7280);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all var(--transition-base, 200ms ease-in-out);
+}
+
+.kpi-card.clickable:hover .kpi-click-indicator {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ========================================
+   Loading State
+   ======================================== */
+
+.kpi-card.loading {
+  pointer-events: none;
+}
+
+.kpi-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3, 12px);
+  padding: var(--space-6, 32px) var(--space-4, 16px);
+}
+
+.kpi-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-border, #E5E7EB);
+  border-top-color: var(--color-primary, #6366F1);
+  border-radius: var(--radius-full, 9999px);
+  animation: kpi-spin 0.8s linear infinite;
+}
+
+@keyframes kpi-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.kpi-loading-text {
+  font-size: var(--text-sm, 13px);
+  color: var(--color-text-muted, #6B7280);
+  font-weight: var(--font-medium, 500);
+}
+
+/* ========================================
+   Error State
+   ======================================== */
+
+.kpi-card.error {
+  border-color: var(--color-danger, #EF4444);
+  background: var(--color-danger-light, #FEE2E2);
+}
+
+.kpi-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-4, 16px);
+}
+
+.kpi-error-icon {
+  font-size: 20px;
+  color: var(--color-danger, #EF4444);
+}
+
+.kpi-error-text {
+  font-size: var(--text-sm, 13px);
+  color: var(--color-danger, #EF4444);
+  font-weight: var(--font-medium, 500);
+}
+
+/* ========================================
+   Theme Variants
+   ======================================== */
+
+.kpi-card.theme-primary {
+  background: linear-gradient(135deg, var(--color-primary, #6366F1) 0%, var(--color-accent, #8B5CF6) 100%);
+  border: none;
+  color: var(--color-text-inverse, #FFFFFF);
+}
+
+.kpi-card.theme-primary .kpi-label,
+.kpi-card.theme-primary .kpi-value,
+.kpi-card.theme-primary .kpi-trend {
+  color: var(--color-text-inverse, #FFFFFF);
+}
+
+.kpi-card.theme-primary .kpi-icon {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.kpi-card.theme-primary .kpi-trend-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.kpi-card.theme-primary .kpi-sparkline-path {
+  stroke: var(--color-text-inverse, #FFFFFF);
+}
+
+.kpi-card.theme-success {
+  border-color: var(--color-success, #10B981);
+}
+
+.kpi-card.theme-success .kpi-value {
+  color: var(--color-success, #10B981);
+}
+
+.kpi-card.theme-success .kpi-sparkline-path {
+  stroke: var(--color-success, #10B981);
+}
+
+.kpi-card.theme-warning {
+  border-color: var(--color-warning, #F59E0B);
+}
+
+.kpi-card.theme-warning .kpi-value {
+  color: var(--color-warning, #F59E0B);
+}
+
+.kpi-card.theme-warning .kpi-sparkline-path {
+  stroke: var(--color-warning, #F59E0B);
+}
+
+.kpi-card.theme-danger {
+  border-color: var(--color-danger, #EF4444);
+}
+
+.kpi-card.theme-danger .kpi-value {
+  color: var(--color-danger, #EF4444);
+}
+
+.kpi-card.theme-danger .kpi-sparkline-path {
+  stroke: var(--color-danger, #EF4444);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .kpi-card {
+    padding: var(--space-4, 20px);
+  }
+
+  .kpi-value {
+    font-size: 1.75rem;
+  }
+
+  .kpi-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+
+  .kpi-sparkline-chart {
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .kpi-card {
+    padding: var(--space-4, 16px);
+  }
+
+  .kpi-value {
+    font-size: 1.5rem;
+  }
+
+  .kpi-sparkline-mini {
+    display: none;
+  }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .kpi-card,
+  .kpi-card *,
+  .kpi-card::before,
+  .kpi-card::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .kpi-card {
+    border-width: 2px;
+  }
+
+  .kpi-card.clickable:focus-visible {
+    outline-width: 3px;
+  }
+}

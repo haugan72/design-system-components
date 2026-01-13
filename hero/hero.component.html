@@ -1,0 +1,52 @@
+<section [class]="getHeroClasses()" [ngStyle]="getHeroStyle()" role="banner">
+  <!-- Background Overlay (for image backgrounds) -->
+  @if (config().overlay && config().background === 'image') {
+    <div class="hero-overlay-layer" [ngStyle]="getOverlayStyle()"></div>
+  }
+
+  <!-- Hero Content -->
+  <div class="hero-content">
+    <!-- Title -->
+    <h1 class="hero-title">{{ title() }}</h1>
+
+    <!-- Subtitle -->
+    @if (subtitle()) {
+      <p class="hero-subtitle">{{ subtitle() }}</p>
+    }
+
+    <!-- Description -->
+    @if (description()) {
+      <p class="hero-description">{{ description() }}</p>
+    }
+
+    <!-- Call-to-Action Buttons -->
+    @if (showPrimaryButton() || showSecondaryButton()) {
+      <div class="hero-actions">
+        @if (showPrimaryButton() && primaryButtonLabel()) {
+          <button
+            class="hero-button hero-button-primary"
+            (click)="onPrimaryClick()"
+            type="button"
+            [attr.aria-label]="primaryButtonLabel()">
+            {{ primaryButtonLabel() }}
+          </button>
+        }
+
+        @if (showSecondaryButton() && secondaryButtonLabel()) {
+          <button
+            class="hero-button hero-button-secondary"
+            (click)="onSecondaryClick()"
+            type="button"
+            [attr.aria-label]="secondaryButtonLabel()">
+            {{ secondaryButtonLabel() }}
+          </button>
+        }
+      </div>
+    }
+
+    <!-- Content Slot -->
+    <div class="hero-slot">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</section>

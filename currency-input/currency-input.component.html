@@ -1,0 +1,52 @@
+<div [class]="containerClasses()">
+  <!-- Label -->
+  <label [for]="id()" class="currency-input-label">
+    {{ label() }}
+    @if (required()) {
+      <span class="currency-input-required" aria-label="required">*</span>
+    }
+  </label>
+
+  <!-- Input Container -->
+  <div class="currency-input-wrapper">
+    <!-- Prefix Currency Symbol -->
+    @if (showPrefix()) {
+      <span class="currency-prefix" aria-hidden="true">{{ currency() }}</span>
+    }
+
+    <!-- Input Field -->
+    <input
+      type="text"
+      [id]="id()"
+      [class]="inputClasses()"
+      [value]="getDisplayValue()"
+      [placeholder]="placeholder()"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [required]="required()"
+      [attr.aria-label]="label()"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="error() || helpText() ? id() + '-description' : null"
+      inputmode="decimal"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+    />
+
+    <!-- Suffix Currency Symbol -->
+    @if (showSuffix()) {
+      <span class="currency-suffix" aria-hidden="true">{{ currency() }}</span>
+    }
+  </div>
+
+  <!-- Help Text / Error Message -->
+  @if (error() || helpText()) {
+    <div [id]="id() + '-description'" class="currency-input-description">
+      @if (error()) {
+        <span class="currency-input-error" role="alert">{{ error() }}</span>
+      } @else if (helpText()) {
+        <span class="currency-input-help">{{ helpText() }}</span>
+      }
+    </div>
+  }
+</div>

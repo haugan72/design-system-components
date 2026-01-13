@@ -1,0 +1,399 @@
+/* ============================================
+   Repeater Field Component Styles
+   ============================================ */
+
+.repeater-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+  width: 100%;
+}
+
+/* ============================================
+   Section Label
+   ============================================ */
+
+.repeater-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text, #1F2937);
+  margin: 0;
+}
+
+/* ============================================
+   Items Container
+   ============================================ */
+
+.repeater-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+}
+
+/* ============================================
+   Individual Item
+   ============================================ */
+
+.repeater-item {
+  background-color: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-md, 12px);
+  padding: var(--space-4, 16px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.repeater-item:hover {
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+  border-color: var(--color-text-muted, #6B7280);
+}
+
+/* ============================================
+   Item Header
+   ============================================ */
+
+.repeater-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4, 16px);
+  padding-bottom: var(--space-3, 12px);
+  border-bottom: 1px solid var(--color-border-light, #F3F4F6);
+}
+
+.repeater-item-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text, #1F2937);
+}
+
+/* ============================================
+   Remove Button
+   ============================================ */
+
+.repeater-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1, 4px);
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-danger, #EF4444);
+  background-color: transparent;
+  border: 1px solid var(--color-danger, #EF4444);
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.repeater-remove-btn:hover {
+  background-color: var(--color-danger, #EF4444);
+  color: var(--color-text-inverse, #FFFFFF);
+}
+
+.repeater-remove-btn:focus {
+  outline: 2px solid var(--color-danger, #EF4444);
+  outline-offset: 2px;
+}
+
+.repeater-remove-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.repeater-remove-text {
+  display: none;
+}
+
+/* ============================================
+   Item Fields Grid
+   ============================================ */
+
+.repeater-item-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4, 16px);
+}
+
+@media (min-width: 768px) {
+  .repeater-item-fields {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================
+   Field Group
+   ============================================ */
+
+.repeater-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.repeater-field-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text, #1F2937);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1, 4px);
+}
+
+.repeater-field-required {
+  color: var(--color-danger, #EF4444);
+  font-weight: 600;
+}
+
+/* ============================================
+   Input Fields
+   ============================================ */
+
+.repeater-field-input,
+.repeater-field-textarea,
+.repeater-field-select {
+  width: 100%;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text, #1F2937);
+  background-color: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-sm, 6px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.repeater-field-input:focus,
+.repeater-field-textarea:focus,
+.repeater-field-select:focus {
+  outline: none;
+  border-color: var(--color-border-focus, #6366F1);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.repeater-field-input:hover:not(:disabled):not(:focus),
+.repeater-field-textarea:hover:not(:disabled):not(:focus),
+.repeater-field-select:hover:not(:disabled):not(:focus) {
+  border-color: var(--color-text-muted, #6B7280);
+}
+
+.repeater-field-input:disabled,
+.repeater-field-textarea:disabled,
+.repeater-field-select:disabled {
+  background-color: var(--color-surface-secondary, #F5F7FA);
+  color: var(--color-text-muted, #6B7280);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.repeater-field-input:read-only,
+.repeater-field-textarea:read-only {
+  background-color: var(--color-surface-secondary, #F5F7FA);
+  cursor: default;
+}
+
+.repeater-field-textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* ============================================
+   Currency Input
+   ============================================ */
+
+.repeater-currency-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.repeater-currency-input {
+  font-variant-numeric: tabular-nums;
+}
+
+.repeater-currency-input.with-prefix {
+  padding-left: 2.5rem;
+}
+
+.repeater-currency-input.with-suffix {
+  padding-right: 2.5rem;
+}
+
+.repeater-currency-prefix,
+.repeater-currency-suffix {
+  position: absolute;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #4B5563);
+  pointer-events: none;
+}
+
+.repeater-currency-prefix {
+  left: var(--space-3, 12px);
+}
+
+.repeater-currency-suffix {
+  right: var(--space-3, 12px);
+}
+
+/* ============================================
+   Checkbox
+   ============================================ */
+
+.repeater-field-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  cursor: pointer;
+}
+
+.repeater-field-checkbox {
+  width: 1.125rem;
+  height: 1.125rem;
+  cursor: pointer;
+  accent-color: var(--color-primary, #6366F1);
+}
+
+.repeater-field-checkbox-label {
+  font-size: 0.875rem;
+  color: var(--color-text, #1F2937);
+  cursor: pointer;
+}
+
+/* ============================================
+   Error State
+   ============================================ */
+
+.repeater-field-error {
+  border-color: var(--color-danger, #EF4444);
+}
+
+.repeater-field-error:focus {
+  border-color: var(--color-danger, #EF4444);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.repeater-field-error-msg {
+  font-size: 0.8125rem;
+  color: var(--color-danger, #EF4444);
+  font-weight: 500;
+  margin-top: calc(var(--space-1, 4px) * -1);
+}
+
+/* ============================================
+   Empty State
+   ============================================ */
+
+.repeater-empty {
+  text-align: center;
+  padding: var(--space-6, 32px) var(--space-4, 16px);
+  background-color: var(--color-surface-secondary, #F5F7FA);
+  border: 1px dashed var(--color-border, #E5E7EB);
+  border-radius: var(--radius-md, 12px);
+}
+
+.repeater-empty-text {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary, #4B5563);
+  margin: 0;
+}
+
+/* ============================================
+   Add Button
+   ============================================ */
+
+.repeater-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-3, 12px) var(--space-5, 24px);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-primary, #6366F1);
+  background-color: var(--color-primary-soft, #E0E7FF);
+  border: 1px solid var(--color-primary, #6366F1);
+  border-radius: var(--radius-md, 12px);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  align-self: flex-start;
+}
+
+.repeater-add-btn:hover {
+  background-color: var(--color-primary, #6366F1);
+  color: var(--color-text-inverse, #FFFFFF);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.08));
+}
+
+.repeater-add-btn:active {
+  transform: translateY(0);
+}
+
+.repeater-add-btn:focus {
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: 2px;
+}
+
+.repeater-add-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+  .repeater-item {
+    padding: var(--space-3, 12px);
+  }
+
+  .repeater-field-input,
+  .repeater-field-textarea,
+  .repeater-field-select {
+    font-size: 1rem; /* Prevent zoom on iOS */
+  }
+
+  .repeater-remove-text {
+    display: inline;
+  }
+
+  .repeater-add-btn {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .repeater-field-input,
+  .repeater-field-textarea,
+  .repeater-field-select {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .repeater-item,
+  .repeater-field-input,
+  .repeater-field-textarea,
+  .repeater-field-select,
+  .repeater-add-btn,
+  .repeater-remove-btn {
+    transition: none;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+.repeater-field-input:focus-visible,
+.repeater-field-textarea:focus-visible,
+.repeater-field-select:focus-visible {
+  outline: 2px solid var(--color-border-focus, #6366F1);
+  outline-offset: 2px;
+}

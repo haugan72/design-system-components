@@ -1,0 +1,318 @@
+/* ============================================
+   Icon Button Component Styles
+   Design System A
+   ============================================ */
+
+/* ========================================
+   Base Icon Button
+   ======================================== */
+
+.icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-family: inherit;
+  font-size: 20px;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition: all var(--transition-fast, 150ms ease-in-out);
+  outline: none;
+  flex-shrink: 0;
+}
+
+.icon-btn:focus-visible {
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: 2px;
+}
+
+.icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.icon-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* ========================================
+   Shape Variants
+   ======================================== */
+
+/* Square - 12px border radius */
+.icon-btn-square {
+  border-radius: var(--radius-md, 12px);
+}
+
+/* Round - Full circle */
+.icon-btn-round {
+  border-radius: var(--radius-full, 9999px);
+}
+
+/* ========================================
+   Color Variants
+   ======================================== */
+
+/* Primary - Solid indigo background */
+.icon-btn-primary {
+  background: var(--color-primary, #6366F1);
+  color: var(--color-text-inverse, #FFFFFF);
+  border-color: var(--color-primary, #6366F1);
+}
+
+.icon-btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-hover, #4F46E5);
+  border-color: var(--color-primary-hover, #4F46E5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.icon-btn-primary:active:not(:disabled) {
+  background: var(--color-primary-hover, #4F46E5);
+  transform: translateY(0);
+}
+
+/* Secondary - Lighter indigo background */
+.icon-btn-secondary {
+  background: var(--color-primary-soft, #E0E7FF);
+  color: var(--color-primary, #6366F1);
+  border-color: var(--color-primary-soft, #E0E7FF);
+}
+
+.icon-btn-secondary:hover:not(:disabled) {
+  background: var(--color-primary, #6366F1);
+  color: var(--color-text-inverse, #FFFFFF);
+  border-color: var(--color-primary, #6366F1);
+  transform: translateY(-1px);
+}
+
+.icon-btn-secondary:active:not(:disabled) {
+  background: var(--color-primary-hover, #4F46E5);
+  transform: translateY(0);
+}
+
+/* Outline - Indigo border, transparent background */
+.icon-btn-outline {
+  background: transparent;
+  color: var(--color-primary, #6366F1);
+  border-color: var(--color-primary, #6366F1);
+}
+
+.icon-btn-outline:hover:not(:disabled) {
+  background: var(--color-primary, #6366F1);
+  color: var(--color-text-inverse, #FFFFFF);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.icon-btn-outline:active:not(:disabled) {
+  background: var(--color-primary-hover, #4F46E5);
+  border-color: var(--color-primary-hover, #4F46E5);
+  transform: translateY(0);
+}
+
+/* Ghost - No border, hover background */
+.icon-btn-ghost {
+  background: transparent;
+  color: var(--color-text-primary, #1F2937);
+  border-color: transparent;
+}
+
+.icon-btn-ghost:hover:not(:disabled) {
+  background: var(--color-surface-secondary, #F5F7FA);
+  color: var(--color-text-primary, #1F2937);
+}
+
+.icon-btn-ghost:active:not(:disabled) {
+  background: var(--color-border, #E5E7EB);
+}
+
+/* Danger - Red background */
+.icon-btn-danger {
+  background: var(--color-danger, #EF4444);
+  color: var(--color-text-inverse, #FFFFFF);
+  border-color: var(--color-danger, #EF4444);
+}
+
+.icon-btn-danger:hover:not(:disabled) {
+  background: #DC2626;
+  border-color: #DC2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.icon-btn-danger:active:not(:disabled) {
+  background: #B91C1C;
+  transform: translateY(0);
+}
+
+/* ========================================
+   Loading State
+   ======================================== */
+
+.icon-btn-loading {
+  pointer-events: none;
+}
+
+.icon-btn-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radius-full, 9999px);
+  animation: icon-btn-spin 0.6s linear infinite;
+}
+
+@keyframes icon-btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   Icon
+   ======================================== */
+
+.icon-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* ========================================
+   Tooltip (Native)
+   ======================================== */
+
+.icon-btn[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  background: var(--color-text-primary, #1F2937);
+  color: var(--color-text-inverse, #FFFFFF);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  border-radius: var(--radius-md, 12px);
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  animation: tooltip-fade-in 150ms ease-in-out forwards;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.icon-btn[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--color-text-primary, #1F2937);
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  animation: tooltip-fade-in 150ms ease-in-out forwards;
+}
+
+@keyframes tooltip-fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .icon-btn-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-btn,
+  .icon-btn-spinner,
+  .icon-btn[title]:hover::after,
+  .icon-btn[title]:hover::before {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .icon-btn:hover:not(:disabled) {
+    transform: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .icon-btn {
+    border-width: 2px;
+  }
+
+  .icon-btn:focus-visible {
+    outline-width: 3px;
+  }
+
+  .icon-btn-ghost {
+    border: 2px solid var(--color-border, #E5E7EB);
+  }
+
+  .icon-btn-ghost:hover:not(:disabled) {
+    border-color: var(--color-primary, #6366F1);
+  }
+}
+
+/* ========================================
+   Dark Mode Support
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .icon-btn-ghost {
+    color: var(--color-text-inverse, #FFFFFF);
+  }
+
+  .icon-btn-ghost:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .icon-btn-secondary {
+    background: rgba(99, 102, 241, 0.2);
+    color: var(--color-primary-soft, #E0E7FF);
+  }
+
+  .icon-btn[title]:hover::after {
+    background: rgba(31, 41, 55, 0.95);
+  }
+
+  .icon-btn[title]:hover::before {
+    border-top-color: rgba(31, 41, 55, 0.95);
+  }
+}

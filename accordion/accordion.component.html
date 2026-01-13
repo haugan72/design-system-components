@@ -1,0 +1,60 @@
+<div [class]="getAccordionClasses()" role="region" aria-label="Accordion">
+  @for (item of items(); track item.id) {
+    <div [class]="getItemClasses(item)">
+      <!-- Accordion Header -->
+      <button
+        class="accordion-header"
+        [attr.aria-expanded]="isExpanded(item.id)"
+        [attr.aria-controls]="'accordion-content-' + item.id"
+        [attr.aria-disabled]="item.disabled"
+        [disabled]="item.disabled"
+        (click)="toggleItem(item)"
+        (keydown)="onKeyDown($event, item)"
+        type="button">
+
+        <!-- Icon (if present) -->
+        @if (item.icon) {
+          <span class="accordion-icon-start">{{ item.icon }}</span>
+        }
+
+        <!-- Title -->
+        <span class="accordion-title">{{ item.title }}</span>
+
+        <!-- Badge (if present) -->
+        @if (item.badge) {
+          <span [class]="getBadgeClass(item.badgeType)">{{ item.badge }}</span>
+        }
+
+        <!-- Expand/Collapse Icon -->
+        <svg
+          class="accordion-icon-end"
+          [class.accordion-icon-rotated]="isExpanded(item.id)"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          aria-hidden="true">
+          <path
+            d="M5 7.5l5 5 5-5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <!-- Accordion Content -->
+      @if (isExpanded(item.id)) {
+        <div
+          class="accordion-content"
+          [id]="'accordion-content-' + item.id"
+          role="region"
+          [attr.aria-labelledby]="'accordion-header-' + item.id">
+          <div class="accordion-content-inner">
+            {{ item.content }}
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,292 @@
+/* ============================================
+   Toggle Switch Component Styles
+   Design System A
+   ============================================ */
+
+/* ========================================
+   Container
+   ======================================== */
+
+.toggle-container {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-container.toggle-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.toggle-label-left {
+  flex-direction: row-reverse;
+}
+
+/* ========================================
+   Label
+   ======================================== */
+
+.toggle-label {
+  font-size: var(--text-base, 15px);
+  font-weight: var(--font-medium, 500);
+  color: var(--color-text-primary, #1F2937);
+  line-height: 1.5;
+}
+
+.toggle-size-sm .toggle-label {
+  font-size: var(--text-sm, 14px);
+}
+
+.toggle-size-lg .toggle-label {
+  font-size: var(--text-base, 16px);
+}
+
+/* ========================================
+   Toggle Wrapper
+   ======================================== */
+
+.toggle-wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   Hidden Checkbox Input
+   ======================================== */
+
+.toggle-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ========================================
+   Toggle Track
+   ======================================== */
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  background: var(--color-border, #E5E7EB);
+  border: 2px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-full, 9999px);
+  transition: all var(--transition-base, 200ms ease-in-out);
+  flex-shrink: 0;
+}
+
+/* Medium (default): 48x24px track */
+.toggle-md {
+  width: 48px;
+  height: 24px;
+}
+
+/* Small: 40x20px track */
+.toggle-sm {
+  width: 40px;
+  height: 20px;
+}
+
+/* Large: 56x28px track */
+.toggle-lg {
+  width: 56px;
+  height: 28px;
+}
+
+/* Checked state */
+.toggle-checked {
+  background: var(--color-primary, #6366F1);
+  border-color: var(--color-primary, #6366F1);
+}
+
+/* Focus state (via hidden input) */
+.toggle-input:focus-visible + .toggle {
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: 2px;
+}
+
+/* Hover state (not disabled) */
+.toggle-container:not(.toggle-disabled):hover .toggle {
+  border-color: var(--color-text-muted, #6B7280);
+}
+
+.toggle-container:not(.toggle-disabled):hover .toggle-checked {
+  background: var(--color-primary-hover, #4F46E5);
+  border-color: var(--color-primary-hover, #4F46E5);
+}
+
+/* Disabled state */
+.toggle-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ========================================
+   Toggle Slider (Circle)
+   ======================================== */
+
+.toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  background: var(--color-surface, #FFFFFF);
+  border-radius: var(--radius-full, 9999px);
+  transition: all var(--transition-base, 200ms ease-in-out);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Medium (default): 16x16px slider */
+.toggle-md .toggle-slider {
+  width: 16px;
+  height: 16px;
+}
+
+/* Small: 14x14px slider */
+.toggle-sm .toggle-slider {
+  width: 14px;
+  height: 14px;
+}
+
+/* Large: 20x20px slider */
+.toggle-lg .toggle-slider {
+  width: 20px;
+  height: 20px;
+}
+
+/* Checked state - move slider to right */
+.toggle-checked.toggle-md .toggle-slider {
+  transform: translateX(24px);
+}
+
+.toggle-checked.toggle-sm .toggle-slider {
+  transform: translateX(20px);
+}
+
+.toggle-checked.toggle-lg .toggle-slider {
+  transform: translateX(28px);
+}
+
+/* ========================================
+   Active Press Animation
+   ======================================== */
+
+.toggle-container:not(.toggle-disabled):active .toggle-slider {
+  transform: scale(0.95);
+}
+
+.toggle-container:not(.toggle-disabled):active .toggle-checked.toggle-md .toggle-slider {
+  transform: translateX(24px) scale(0.95);
+}
+
+.toggle-container:not(.toggle-disabled):active .toggle-checked.toggle-sm .toggle-slider {
+  transform: translateX(20px) scale(0.95);
+}
+
+.toggle-container:not(.toggle-disabled):active .toggle-checked.toggle-lg .toggle-slider {
+  transform: translateX(28px) scale(0.95);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .toggle-label {
+    font-size: var(--text-sm, 14px);
+  }
+
+  /* Slightly larger touch targets on mobile */
+  .toggle-md {
+    width: 50px;
+    height: 26px;
+  }
+
+  .toggle-md .toggle-slider {
+    width: 18px;
+    height: 18px;
+  }
+
+  .toggle-checked.toggle-md .toggle-slider {
+    transform: translateX(24px);
+  }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle,
+  .toggle-slider {
+    transition: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .toggle {
+    border-width: 3px;
+  }
+
+  .toggle-input:focus-visible + .toggle {
+    outline-width: 3px;
+  }
+
+  .toggle-slider {
+    box-shadow: 0 0 0 2px var(--color-text-primary, #1F2937);
+  }
+}
+
+/* ========================================
+   Dark Mode Support
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .toggle-label {
+    color: var(--color-text-inverse, #FFFFFF);
+  }
+
+  .toggle {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .toggle-checked {
+    background: var(--color-primary, #6366F1);
+    border-color: var(--color-primary, #6366F1);
+  }
+
+  .toggle-slider {
+    background: var(--color-surface, #FFFFFF);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+
+@media print {
+  .toggle-container {
+    page-break-inside: avoid;
+  }
+
+  .toggle-checked::after {
+    content: ' (On)';
+    font-size: 10px;
+    margin-left: 4px;
+  }
+
+  .toggle:not(.toggle-checked)::after {
+    content: ' (Off)';
+    font-size: 10px;
+    margin-left: 4px;
+  }
+}

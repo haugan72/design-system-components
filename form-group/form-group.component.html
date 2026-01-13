@@ -1,0 +1,36 @@
+<div [ngClass]="containerClasses()" [id]="id()">
+  <!-- Label -->
+  @if (label()) {
+    <label
+      [for]="id() + '-control'"
+      [ngClass]="labelClasses()">
+      {{ label() }}
+      @if (required()) {
+        <span class="form-group-required-indicator" aria-label="required">*</span>
+      }
+      @if (optional()) {
+        <span class="form-group-optional-indicator">(optional)</span>
+      }
+    </label>
+  }
+
+  <!-- Control Slot -->
+  <div
+    class="form-group-control"
+    [id]="id() + '-control'"
+    (focus)="onFocus()"
+    (blur)="onBlur()">
+    <ng-content></ng-content>
+  </div>
+
+  <!-- Helper Text / Error Message -->
+  @if (showHelperText()) {
+    <div
+      [ngClass]="helperTextClasses()"
+      [id]="id() + '-helper'"
+      role="alert"
+      [attr.aria-live]="error() ? 'assertive' : 'polite'">
+      {{ error() || helpText() }}
+    </div>
+  }
+</div>

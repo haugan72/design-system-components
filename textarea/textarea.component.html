@@ -1,0 +1,44 @@
+<div [ngClass]="containerClasses()">
+  <!-- Label -->
+  <label [attr.for]="id()" class="textarea-label">
+    {{ label() }}
+    @if (required()) {
+      <span class="textarea-required" aria-label="required">*</span>
+    }
+  </label>
+
+  <!-- Textarea Element -->
+  <textarea
+    [id]="id()"
+    [ngClass]="textareaClasses()"
+    [value]="value()"
+    [placeholder]="placeholder() || ''"
+    [disabled]="disabled()"
+    [readonly]="readonly()"
+    [required]="required()"
+    [rows]="rows()"
+    [maxlength]="maxLength() || null"
+    [minlength]="minLength() || null"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-describedby]="error() || helpText() ? id() + '-desc' : null"
+    (input)="onInput($event)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"></textarea>
+
+  <!-- Help Text / Error Message -->
+  @if (error() || helpText()) {
+    <div
+      [id]="id() + '-desc'"
+      class="textarea-description"
+      [class.textarea-error-message]="error()">
+      {{ error() || helpText() }}
+    </div>
+  }
+
+  <!-- Character Count -->
+  @if (showCharacterCount()) {
+    <div class="textarea-char-count">
+      {{ characterCount() }}
+    </div>
+  }
+</div>

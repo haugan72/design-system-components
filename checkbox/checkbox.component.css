@@ -1,0 +1,207 @@
+/* ============================================
+   Checkbox Component Styles
+   Design System A
+   ============================================ */
+
+/* ========================================
+   Container
+   ======================================== */
+
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.checkbox-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   Label
+   ======================================== */
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-disabled .checkbox-label {
+  cursor: not-allowed;
+}
+
+/* ========================================
+   Hidden Input
+   ======================================== */
+
+.checkbox-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ========================================
+   Checkbox
+   ======================================== */
+
+.checkbox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: var(--color-surface, #FFFFFF);
+  border: 2px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-sm, 6px);
+  transition: all var(--transition-fast, 150ms ease-in-out);
+  flex-shrink: 0;
+}
+
+.checkbox-input:focus-visible + .checkbox {
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: 2px;
+}
+
+.checkbox-label:hover .checkbox:not(.checkbox-disabled) {
+  border-color: var(--color-primary, #6366F1);
+}
+
+/* Checked state */
+.checkbox-checked {
+  background: var(--color-primary, #6366F1);
+  border-color: var(--color-primary, #6366F1);
+}
+
+/* Indeterminate state */
+.checkbox-indeterminate {
+  background: var(--color-primary, #6366F1);
+  border-color: var(--color-primary, #6366F1);
+}
+
+/* Error state */
+.checkbox-error {
+  border-color: var(--color-danger, #EF4444);
+}
+
+.checkbox-checked.checkbox-error,
+.checkbox-indeterminate.checkbox-error {
+  background: var(--color-danger, #EF4444);
+  border-color: var(--color-danger, #EF4444);
+}
+
+/* ========================================
+   Checkbox Icon
+   ======================================== */
+
+.checkbox-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-inverse, #FFFFFF);
+  line-height: 1;
+}
+
+/* ========================================
+   Text Label
+   ======================================== */
+
+.checkbox-text {
+  font-size: var(--text-base, 15px);
+  font-weight: var(--font-medium, 500);
+  color: var(--color-text-primary, #1F2937);
+  line-height: 1.5;
+}
+
+.checkbox-required {
+  color: var(--color-danger, #EF4444);
+  margin-left: 2px;
+}
+
+/* ========================================
+   Description / Help Text
+   ======================================== */
+
+.checkbox-description {
+  margin-left: 30px;
+  font-size: var(--text-sm, 13px);
+  line-height: 1.5;
+  color: var(--color-text-secondary, #4B5563);
+}
+
+.checkbox-error-message {
+  color: var(--color-danger, #EF4444);
+  font-weight: var(--font-medium, 500);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  .checkbox-text {
+    font-size: var(--text-sm, 14px);
+  }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .checkbox {
+    transition: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .checkbox {
+    border-width: 3px;
+  }
+
+  .checkbox-input:focus-visible + .checkbox {
+    outline-width: 3px;
+  }
+}
+
+/* ========================================
+   Dark Mode Support
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .checkbox-text {
+    color: var(--color-text-inverse, #FFFFFF);
+  }
+
+  .checkbox {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .checkbox-checked,
+  .checkbox-indeterminate {
+    background: var(--color-primary, #6366F1);
+    border-color: var(--color-primary, #6366F1);
+  }
+
+  .checkbox-description {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}

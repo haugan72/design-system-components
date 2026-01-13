@@ -1,0 +1,88 @@
+<div [ngClass]="containerClasses()">
+  <!-- Label -->
+  <label [attr.for]="id()" class="text-input-label">
+    {{ label() }}
+    @if (required()) {
+      <span class="text-input-required" aria-label="required">*</span>
+    }
+  </label>
+
+  <!-- Input Wrapper -->
+  <div class="text-input-wrapper">
+    <!-- Prefix Icon -->
+    @if (prefixIcon()) {
+      <span class="text-input-prefix" aria-hidden="true">
+        {{ prefixIcon() }}
+      </span>
+    }
+
+    <!-- Input Element -->
+    <input
+      [id]="id()"
+      [type]="inputType()"
+      [ngClass]="inputClasses()"
+      [value]="value()"
+      [placeholder]="placeholder() || ''"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [required]="required()"
+      [maxlength]="maxLength() || null"
+      [minlength]="minLength() || null"
+      [pattern]="pattern() || null"
+      [autocomplete]="autocomplete() || null"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="error() || helpText() ? id() + '-desc' : null"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()">
+
+    <!-- Suffix Icons/Buttons -->
+    <div class="text-input-suffix-group">
+      <!-- Clear Button -->
+      @if (showClear()) {
+        <button
+          type="button"
+          class="text-input-clear-btn"
+          [attr.aria-label]="'Clear ' + label()"
+          (click)="onClear()">
+          ✕
+        </button>
+      }
+
+      <!-- Password Toggle -->
+      @if (type() === 'password') {
+        <button
+          type="button"
+          class="text-input-password-toggle"
+          [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+          (click)="togglePasswordVisibility()">
+          {{ showPassword() ? '👁' : '👁‍🗨' }}
+        </button>
+      }
+
+      <!-- Suffix Icon -->
+      @if (suffixIcon()) {
+        <span class="text-input-suffix" aria-hidden="true">
+          {{ suffixIcon() }}
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- Help Text / Error Message -->
+  @if (error() || helpText()) {
+    <div
+      [id]="id() + '-desc'"
+      class="text-input-description"
+      [class.text-input-error-message]="error()">
+      {{ error() || helpText() }}
+    </div>
+  }
+
+  <!-- Character Count -->
+  @if (showCharacterCount()) {
+    <div class="text-input-char-count">
+      {{ characterCount() }}
+    </div>
+  }
+</div>

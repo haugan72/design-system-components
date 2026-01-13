@@ -1,0 +1,426 @@
+/* ============================================
+   Form Component Styles
+   Design System A
+   ============================================ */
+
+/* ========================================
+   Form Container
+   ======================================== */
+
+.app-form {
+  width: 100%;
+}
+
+/* ========================================
+   Form Header
+   ======================================== */
+
+.form-header {
+  margin-bottom: var(--space-6, 32px);
+}
+
+.form-title {
+  font-size: var(--text-2xl, 24px);
+  font-weight: var(--font-bold, 700);
+  color: var(--color-text-primary, #1F2937);
+  margin: 0 0 var(--space-2, 8px) 0;
+}
+
+.form-description {
+  font-size: var(--text-sm, 14px);
+  color: var(--color-text-secondary, #4B5563);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ========================================
+   Form Fields
+   ======================================== */
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5, 24px);
+}
+
+/* ========================================
+   Form Field
+   ======================================== */
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.form-vertical .form-field {
+  flex-direction: column;
+}
+
+.form-horizontal .form-field {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-4, 16px);
+}
+
+.form-horizontal .form-label {
+  min-width: 150px;
+  padding-top: var(--space-2, 8px);
+}
+
+.form-horizontal .form-control-wrapper {
+  flex: 1;
+}
+
+.form-inline .form-fields {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--space-4, 16px);
+}
+
+.form-inline .form-field {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  flex: 0 0 auto;
+}
+
+/* ========================================
+   Form Label
+   ======================================== */
+
+.form-label {
+  display: block;
+  font-size: var(--text-sm, 14px);
+  font-weight: var(--font-semibold, 600);
+  color: var(--color-text-primary, #1F2937);
+  margin-bottom: var(--space-1, 4px);
+}
+
+.required-marker {
+  color: var(--color-danger, #EF4444);
+  margin-left: var(--space-1, 4px);
+}
+
+/* ========================================
+   Form Control Wrapper
+   ======================================== */
+
+.form-control-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ========================================
+   Form Controls
+   ======================================== */
+
+.form-control {
+  width: 100%;
+  padding: var(--space-2, 10px) var(--space-3, 14px);
+  font-size: var(--text-sm, 14px);
+  font-family: inherit;
+  color: var(--color-text-primary, #1F2937);
+  background: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-md, 12px);
+  transition: all var(--transition-fast, 150ms ease-in-out);
+  outline: none;
+}
+
+.form-control:hover:not(:disabled) {
+  border-color: var(--color-text-secondary, #4B5563);
+}
+
+.form-control:focus {
+  border-color: var(--color-primary, #6366F1);
+  box-shadow: 0 0 0 3px var(--color-primary-soft, #E0E7FF);
+}
+
+.form-control:disabled {
+  background: var(--color-surface-secondary, #F5F7FA);
+  color: var(--color-text-muted, #6B7280);
+  cursor: not-allowed;
+}
+
+.form-control::placeholder {
+  color: var(--color-text-muted, #6B7280);
+}
+
+/* ========================================
+   Textarea
+   ======================================== */
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ========================================
+   Select
+   ======================================== */
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3, 14px) center;
+  padding-right: 40px;
+}
+
+/* ========================================
+   Checkbox
+   ======================================== */
+
+.form-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 10px);
+}
+
+.form-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--color-primary, #6366F1);
+}
+
+.form-checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.form-checkbox-label {
+  font-size: var(--text-sm, 14px);
+  font-weight: var(--font-normal, 400);
+  color: var(--color-text-primary, #1F2937);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ========================================
+   Radio
+   ======================================== */
+
+.form-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+.form-radio-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 10px);
+}
+
+.form-radio {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--color-primary, #6366F1);
+}
+
+.form-radio:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.form-radio-label {
+  font-size: var(--text-sm, 14px);
+  font-weight: var(--font-normal, 400);
+  color: var(--color-text-primary, #1F2937);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ========================================
+   Help Text
+   ======================================== */
+
+.form-help-text {
+  font-size: var(--text-sm, 13px);
+  color: var(--color-text-secondary, #4B5563);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ========================================
+   Error State
+   ======================================== */
+
+.form-field.has-error .form-control {
+  border-color: var(--color-danger, #EF4444);
+}
+
+.form-field.has-error .form-control:focus {
+  border-color: var(--color-danger, #EF4444);
+  box-shadow: 0 0 0 3px var(--color-danger-light, #FEE2E2);
+}
+
+.form-error {
+  font-size: var(--text-sm, 13px);
+  color: var(--color-danger, #EF4444);
+  margin: 0;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 6px);
+}
+
+.form-error::before {
+  content: "⚠";
+  font-size: 14px;
+}
+
+/* ========================================
+   Form Actions
+   ======================================== */
+
+.form-actions {
+  display: flex;
+  gap: var(--space-3, 12px);
+  margin-top: var(--space-6, 32px);
+  padding-top: var(--space-5, 24px);
+  border-top: 1px solid var(--color-border, #E5E7EB);
+}
+
+.form-inline .form-actions {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-2, 10px) var(--space-4, 20px);
+  font-size: var(--text-sm, 14px);
+  font-weight: var(--font-semibold, 600);
+  border: none;
+  border-radius: var(--radius-md, 12px);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease-in-out);
+  outline: none;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--color-primary, #6366F1);
+  color: var(--color-text-inverse, #FFFFFF);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-hover, #4F46E5);
+}
+
+.btn-primary:focus-visible {
+  box-shadow: 0 0 0 3px var(--color-primary-soft, #E0E7FF);
+}
+
+.btn-secondary {
+  background: var(--color-surface-secondary, #F5F7FA);
+  color: var(--color-text-primary, #1F2937);
+  border: 1px solid var(--color-border, #E5E7EB);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-border-light, #F3F4F6);
+}
+
+.btn-secondary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-secondary, #4B5563);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--color-surface-secondary, #F5F7FA);
+  color: var(--color-text-primary, #1F2937);
+}
+
+/* ========================================
+   Button Spinner
+   ======================================== */
+
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--color-text-inverse, #FFFFFF);
+  border-radius: var(--radius-full, 9999px);
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .form-horizontal .form-field {
+    flex-direction: column;
+    gap: var(--space-2, 8px);
+  }
+
+  .form-horizontal .form-label {
+    min-width: auto;
+    padding-top: 0;
+  }
+
+  .form-inline .form-fields {
+    flex-direction: column;
+  }
+
+  .form-inline .form-field {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .form-control,
+  .btn,
+  .btn-spinner {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .form-control {
+    border-width: 2px;
+  }
+
+  .form-control:focus {
+    outline: 2px solid currentColor;
+  }
+}

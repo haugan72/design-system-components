@@ -1,0 +1,206 @@
+<div class="repeater-field">
+  <!-- Section Label -->
+  @if (label()) {
+    <h3 class="repeater-label">{{ label() }}</h3>
+  }
+
+  <!-- Items List -->
+  <div class="repeater-items">
+    @for (item of getItems(); track trackByItemId($index, item); let idx = $index) {
+      <div class="repeater-item" [attr.data-index]="idx">
+        <!-- Item Header -->
+        <div class="repeater-item-header">
+          <span class="repeater-item-title">
+            {{ itemLabelText() }} {{ idx + 1 }}
+          </span>
+
+          <!-- Remove Button -->
+          @if (canRemoveItem(idx)) {
+            <button
+              type="button"
+              class="repeater-remove-btn"
+              [attr.aria-label]="removeButtonText() + ' ' + itemLabelText() + ' ' + (idx + 1)"
+              (click)="removeItem(idx)"
+            >
+              <span class="repeater-remove-icon" aria-hidden="true">×</span>
+              <span class="repeater-remove-text">{{ removeButtonText() }}</span>
+            </button>
+          }
+        </div>
+
+        <!-- Item Fields -->
+        <div class="repeater-item-fields">
+          @for (field of config().itemFields; track field.fieldName) {
+            <div class="repeater-field-group">
+              <!-- Field Label -->
+              <label
+                [for]="item.id + '-' + field.fieldName"
+                class="repeater-field-label"
+              >
+                {{ field.label }}
+                @if (field.required) {
+                  <span class="repeater-field-required" aria-label="required">*</span>
+                }
+              </label>
+
+              <!-- Text Input -->
+              @if (field.type === 'text' || field.type === 'email' || field.type === 'tel' || field.type === 'url') {
+                <input
+                  [type]="field.type"
+                  [id]="item.id + '-' + field.fieldName"
+                  [value]="getFieldValue(item, field.fieldName)"
+                  [placeholder]="field.placeholder || ''"
+                  [required]="field.required || false"
+                  [disabled]="disabled()"
+                  [readonly]="readonly()"
+                  class="repeater-field-input"
+                  [class.repeater-field-error]="getFieldError(item, field.fieldName)"
+                  (input)="onFieldInput($event, item, field)"
+                />
+              }
+
+              <!-- Number Input -->
+              @if (field.type === 'number') {
+                <input
+                  type="number"
+                  [id]="item.id + '-' + field.fieldName"
+                  [value]="getFieldValue(item, field.fieldName)"
+                  [placeholder]="field.placeholder || '0'"
+                  [required]="field.required || false"
+                  [disabled]="disabled()"
+                  [readonly]="readonly()"
+                  [min]="field.min"
+                  [max]="field.max"
+                  [step]="field.decimals ? (1 / Math.pow(10, field.decimals)) : 1"
+                  class="repeater-field-input"
+                  [class.repeater-field-error]="getFieldError(item, field.fieldName)"
+                  (input)="onFieldInput($event, item, field)"
+                />
+              }
+
+              <!-- Currency Input -->
+              @if (field.type === 'currency') {
+                <div class="repeater-currency-wrapper">
+                  @if (field.currencyPosition === 'prefix') {
+                    <span class="repeater-currency-prefix" aria-hidden="true">{{ field.currency || 'kr' }}</span>
+                  }
+
+                  <input
+                    type="text"
+                    [id]="item.id + '-' + field.fieldName"
+                    [value]="formatNumericValue(getFieldValue(item, field.fieldName), field.decimals || 0)"
+                    [placeholder]="field.placeholder || '0'"
+                    [required]="field.required || false"
+                    [disabled]="disabled()"
+                    [readonly]="readonly()"
+                    inputmode="decimal"
+                    class="repeater-field-input repeater-currency-input"
+                    [class.repeater-field-error]="getFieldError(item, field.fieldName)"
+                    [class.with-prefix]="field.currencyPosition === 'prefix'"
+                    [class.with-suffix]="!field.currencyPosition || field.currencyPosition === 'suffix'"
+                    (input)="onFieldInput($event, item, field)"
+                  />
+
+                  @if (!field.currencyPosition || field.currencyPosition === 'suffix') {
+                    <span class="repeater-currency-suffix" aria-hidden="true">{{ field.currency || 'kr' }}</span>
+                  }
+                </div>
+              }
+
+              <!-- Textarea -->
+              @if (field.type === 'textarea') {
+                <textarea
+                  [id]="item.id + '-' + field.fieldName"
+                  [value]="getFieldValue(item, field.fieldName)"
+                  [placeholder]="field.placeholder || ''"
+                  [required]="field.required || false"
+                  [disabled]="disabled()"
+                  [readonly]="readonly()"
+                  rows="3"
+                  class="repeater-field-textarea"
+                  [class.repeater-field-error]="getFieldError(item, field.fieldName)"
+                  (input)="onFieldInput($event, item, field)"
+                ></textarea>
+              }
+
+              <!-- Select -->
+              @if (field.type === 'select' && field.options) {
+                <select
+                  [id]="item.id + '-' + field.fieldName"
+                  [value]="getFieldValue(item, field.fieldName)"
+                  [required]="field.required || false"
+                  [disabled]="disabled()"
+                  class="repeater-field-select"
+                  [class.repeater-field-error]="getFieldError(item, field.fieldName)"
+                  (change)="onFieldInput($event, item, field)"
+                >
+                  <option value="">{{ field.placeholder || 'Select...' }}</option>
+                  @for (option of field.options; track option.value) {
+                    <option [value]="option.value">{{ option.label }}</option>
+                  }
+                </select>
+              }
+
+              <!-- Checkbox -->
+              @if (field.type === 'checkbox') {
+                <label class="repeater-field-checkbox-wrapper">
+                  <input
+                    type="checkbox"
+                    [id]="item.id + '-' + field.fieldName"
+                    [checked]="getFieldValue(item, field.fieldName)"
+                    [disabled]="disabled()"
+                    class="repeater-field-checkbox"
+                    (change)="onFieldInput($event, item, field)"
+                  />
+                  <span class="repeater-field-checkbox-label">{{ field.placeholder || field.label }}</span>
+                </label>
+              }
+
+              <!-- Date Input -->
+              @if (field.type === 'date') {
+                <input
+                  type="date"
+                  [id]="item.id + '-' + field.fieldName"
+                  [value]="getFieldValue(item, field.fieldName)"
+                  [required]="field.required || false"
+                  [disabled]="disabled()"
+                  [readonly]="readonly()"
+                  class="repeater-field-input"
+                  [class.repeater-field-error]="getFieldError(item, field.fieldName)"
+                  (input)="onFieldInput($event, item, field)"
+                />
+              }
+
+              <!-- Error Message -->
+              @if (getFieldError(item, field.fieldName)) {
+                <span class="repeater-field-error-msg" role="alert">
+                  {{ getFieldError(item, field.fieldName) }}
+                </span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (getItems().length === 0) {
+      <div class="repeater-empty">
+        <p class="repeater-empty-text">No {{ itemLabelText().toLowerCase() }}s added yet.</p>
+      </div>
+    }
+  </div>
+
+  <!-- Add Button -->
+  @if (canAddItem()) {
+    <button
+      type="button"
+      class="repeater-add-btn"
+      [attr.aria-label]="addButtonText()"
+      (click)="addItem()"
+    >
+      <span class="repeater-add-icon" aria-hidden="true">+</span>
+      <span class="repeater-add-text">{{ addButtonText() }}</span>
+    </button>
+  }
+</div>

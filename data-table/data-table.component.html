@@ -1,0 +1,140 @@
+<div class="table-container" [class.sticky-header]="config().stickyHeader">
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="table-loading">
+      <div class="loading-spinner"></div>
+      <span class="loading-text">Loading data...</span>
+    </div>
+  }
+
+  <!-- Error State -->
+  @else if (error()) {
+    <div class="table-error">
+      <span class="error-icon">⚠</span>
+      <span class="error-text">{{ error() }}</span>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @else if (data().length === 0) {
+    <div class="table-empty">
+      <span class="empty-icon">📭</span>
+      <span class="empty-text">{{ emptyMessage() }}</span>
+    </div>
+  }
+
+  <!-- Table -->
+  @else {
+    <table
+      class="data-table"
+      [class.striped]="config().striped"
+      [class.hoverable]="config().hoverable"
+      [class.bordered]="config().bordered"
+      [class.compact]="config().compact">
+
+      <!-- Header -->
+      <thead>
+        <tr>
+          <!-- Selection Column -->
+          @if (selectable()) {
+            <th class="select-column">
+              <input
+                type="checkbox"
+                [checked]="allSelected()"
+                [indeterminate]="someSelected()"
+                (change)="toggleAllSelection()"
+                aria-label="Select all rows">
+            </th>
+          }
+
+          <!-- Data Columns -->
+          @for (column of columns(); track column.key) {
+            <th
+              [class.sortable]="column.sortable"
+              [class.sorted]="sortState().column === column.key"
+              [style.width]="column.width"
+              [style.text-align]="column.align || 'left'"
+              (click)="onColumnClick(column)"
+              [attr.aria-sort]="sortState().column === column.key ? (sortState().direction === 'asc' ? 'ascending' : 'descending') : null">
+              <span class="column-label">{{ column.label }}</span>
+              @if (column.sortable) {
+                <span class="sort-icon" aria-hidden="true">{{ getSortIcon(column) }}</span>
+              }
+            </th>
+          }
+        </tr>
+      </thead>
+
+      <!-- Body -->
+      <tbody>
+        @for (row of paginatedData(); track $index) {
+          <tr
+            [class.selected]="isRowSelected(row)"
+            (click)="onRowClick(row, $event)"
+            [attr.role]="rowClick.observed ? 'button' : null"
+            [attr.tabindex]="rowClick.observed ? 0 : null">
+
+            <!-- Selection Cell -->
+            @if (selectable()) {
+              <td class="select-cell">
+                <input
+                  type="checkbox"
+                  [checked]="isRowSelected(row)"
+                  (change)="toggleRowSelection(row)"
+                  [attr.aria-label]="'Select row ' + ($index + 1)"
+                  (click)="$event.stopPropagation()">
+              </td>
+            }
+
+            <!-- Data Cells -->
+            @for (column of columns(); track column.key) {
+              <td [style.text-align]="column.align || 'left'">
+                {{ getCellValue(row, column) }}
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    @if (pageSize() > 0 && totalPages() > 1) {
+      <div class="table-pagination">
+        <div class="pagination-info">
+          Showing {{ currentPage() * pageSize() + 1 }} - {{ Math.min((currentPage() + 1) * pageSize(), data().length) }} of {{ data().length }}
+        </div>
+
+        <div class="pagination-controls">
+          <button
+            class="pagination-button"
+            [disabled]="currentPage() === 0"
+            (click)="previousPage()"
+            aria-label="Previous page">
+            ← Previous
+          </button>
+
+          <div class="pagination-pages">
+            @for (page of Array(totalPages()).fill(0); track $index) {
+              <button
+                class="pagination-page"
+                [class.active]="currentPage() === $index"
+                (click)="goToPage($index)"
+                [attr.aria-label]="'Go to page ' + ($index + 1)"
+                [attr.aria-current]="currentPage() === $index ? 'page' : null">
+                {{ $index + 1 }}
+              </button>
+            }
+          </div>
+
+          <button
+            class="pagination-button"
+            [disabled]="currentPage() >= totalPages() - 1"
+            (click)="nextPage()"
+            aria-label="Next page">
+            Next →
+          </button>
+        </div>
+      </div>
+    }
+  }
+</div>

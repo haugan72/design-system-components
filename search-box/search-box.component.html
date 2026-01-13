@@ -1,0 +1,30 @@
+<div [ngClass]="containerClasses()">
+  <!-- Search Icon -->
+  <span class="search-icon" aria-hidden="true">🔍</span>
+
+  <!-- Input Element -->
+  <input
+    [id]="id()"
+    type="search"
+    class="search-input"
+    [value]="value()"
+    [placeholder]="placeholder()"
+    [disabled]="disabled()"
+    [attr.autofocus]="autoFocus() || null"
+    [attr.aria-label]="placeholder()"
+    (input)="onInput($event)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    (keydown)="onKeyDown($event)">
+
+  <!-- Clear Button -->
+  @if (showClear()) {
+    <button
+      type="button"
+      class="search-clear-btn"
+      aria-label="Clear search"
+      (click)="onClear()">
+      ✕
+    </button>
+  }
+</div>

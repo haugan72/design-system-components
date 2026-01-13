@@ -1,0 +1,138 @@
+<aside
+  class="sidebar"
+  [class.sidebar-collapsed]="isCollapsed()"
+  [ngClass]="themeClass()"
+  [style.width]="sidebarWidth()"
+  role="navigation"
+  aria-label="Sidebar navigation">
+
+  <!-- Collapse Toggle Button -->
+  @if (config().collapsible) {
+    <button
+      class="sidebar-collapse-toggle"
+      (click)="toggleCollapse()"
+      [attr.aria-expanded]="!isCollapsed()"
+      [attr.aria-label]="isCollapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+      type="button">
+      <span class="collapse-icon" [class.collapsed]="isCollapsed()">
+        {{ isCollapsed() ? '→' : '←' }}
+      </span>
+    </button>
+  }
+
+  <!-- Header Section -->
+  @if (header() && !isCollapsed()) {
+    <div class="sidebar-header">
+      {{ header() }}
+    </div>
+  }
+
+  <!-- Navigation Items -->
+  <nav class="sidebar-nav">
+    <ul class="sidebar-menu" role="menu">
+      @for (item of items(); track item.id) {
+        <li class="sidebar-menu-item" role="none">
+          <!-- Main Item -->
+          <a
+            class="sidebar-item"
+            [class.sidebar-item-active]="isItemActive(item.id)"
+            [class.sidebar-item-disabled]="item.disabled"
+            [class.sidebar-item-has-children]="hasChildren(item)"
+            [href]="item.href || '#'"
+            [attr.aria-current]="isItemActive(item.id) ? 'page' : null"
+            [attr.aria-disabled]="item.disabled || null"
+            [attr.aria-expanded]="hasChildren(item) ? isItemExpanded(item.id) : null"
+            [attr.tabindex]="item.disabled ? -1 : 0"
+            role="menuitem"
+            (click)="onItemClick(item, $event)"
+            (keydown)="onKeyDown($event, item)">
+
+            <!-- Icon -->
+            @if (item.icon) {
+              <span class="sidebar-item-icon" aria-hidden="true">
+                {{ item.icon }}
+              </span>
+            }
+
+            <!-- Label (hidden when collapsed) -->
+            @if (!isCollapsed()) {
+              <span class="sidebar-item-label">{{ item.label }}</span>
+            }
+
+            <!-- Badge -->
+            @if (item.badge && !isCollapsed()) {
+              <span
+                class="sidebar-badge"
+                [ngClass]="getBadgeClass(item.badgeType)"
+                aria-label="Badge">
+                {{ item.badge }}
+              </span>
+            }
+
+            <!-- Expand Icon -->
+            @if (hasChildren(item) && !isCollapsed()) {
+              <span
+                class="sidebar-expand-icon"
+                [class.expanded]="isItemExpanded(item.id)"
+                aria-hidden="true">
+                ›
+              </span>
+            }
+          </a>
+
+          <!-- Sub-items (Children) -->
+          @if (hasChildren(item) && isItemExpanded(item.id) && !isCollapsed()) {
+            <ul class="sidebar-submenu" role="menu">
+              @for (child of item.children; track child.id) {
+                <li class="sidebar-submenu-item" role="none">
+                  <a
+                    class="sidebar-item sidebar-item-child"
+                    [class.sidebar-item-active]="isItemActive(child.id)"
+                    [class.sidebar-item-disabled]="child.disabled"
+                    [href]="child.href || '#'"
+                    [attr.aria-current]="isItemActive(child.id) ? 'page' : null"
+                    [attr.aria-disabled]="child.disabled || null"
+                    [attr.tabindex]="child.disabled ? -1 : 0"
+                    [style.padding-left]="'calc(16px + ' + getItemLevel(1) + ')'"
+                    role="menuitem"
+                    (click)="onItemClick(child, $event)"
+                    (keydown)="onKeyDown($event, child)">
+
+                    @if (child.icon) {
+                      <span class="sidebar-item-icon" aria-hidden="true">
+                        {{ child.icon }}
+                      </span>
+                    }
+
+                    <span class="sidebar-item-label">{{ child.label }}</span>
+
+                    @if (child.badge) {
+                      <span
+                        class="sidebar-badge"
+                        [ngClass]="getBadgeClass(child.badgeType)"
+                        aria-label="Badge">
+                        {{ child.badge }}
+                      </span>
+                    }
+                  </a>
+                </li>
+              }
+            </ul>
+          }
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <!-- Footer Section -->
+  @if (config().showFooter && footer() && !isCollapsed()) {
+    <div class="sidebar-footer">
+      {{ footer() }}
+    </div>
+  }
+
+  <!-- Tooltip for collapsed items -->
+  @if (isCollapsed()) {
+    <div class="sidebar-tooltip" role="tooltip" aria-hidden="true"></div>
+  }
+</aside>

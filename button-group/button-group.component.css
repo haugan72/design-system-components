@@ -1,0 +1,248 @@
+/* ============================================
+   Button Group Component Styles
+   Design System A
+   ============================================ */
+
+/* ========================================
+   Base Button Group
+   ======================================== */
+
+.btn-group {
+  display: flex;
+  align-items: center;
+}
+
+/* ========================================
+   Orientation
+   ======================================== */
+
+.btn-group-horizontal {
+  flex-direction: row;
+}
+
+.btn-group-vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ========================================
+   Full Width
+   ======================================== */
+
+.btn-group-full-width {
+  width: 100%;
+}
+
+.btn-group-full-width.btn-group-horizontal ::ng-deep .btn,
+.btn-group-full-width.btn-group-horizontal ::ng-deep app-button,
+.btn-group-full-width.btn-group-horizontal ::ng-deep app-icon-button {
+  flex: 1;
+  min-width: 0;
+}
+
+.btn-group-vertical ::ng-deep .btn,
+.btn-group-vertical ::ng-deep app-button,
+.btn-group-vertical ::ng-deep app-icon-button {
+  width: 100%;
+}
+
+/* ========================================
+   Dividers
+   ======================================== */
+
+.btn-group-divided.btn-group-horizontal ::ng-deep .btn:not(:last-child)::after,
+.btn-group-divided.btn-group-horizontal ::ng-deep app-button:not(:last-child)::after,
+.btn-group-divided.btn-group-horizontal ::ng-deep app-icon-button:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 25%;
+  right: 0;
+  width: 1px;
+  height: 50%;
+  background: var(--color-border, #E5E7EB);
+  opacity: 0.5;
+}
+
+.btn-group-divided.btn-group-vertical ::ng-deep .btn:not(:last-child)::after,
+.btn-group-divided.btn-group-vertical ::ng-deep app-button:not(:last-child)::after,
+.btn-group-divided.btn-group-vertical ::ng-deep app-icon-button:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 1px;
+  background: var(--color-border, #E5E7EB);
+  opacity: 0.5;
+}
+
+/* Position children relative for dividers */
+.btn-group-divided ::ng-deep .btn,
+.btn-group-divided ::ng-deep app-button,
+.btn-group-divided ::ng-deep app-icon-button {
+  position: relative;
+}
+
+/* ========================================
+   Attached Buttons (No Gap)
+   ======================================== */
+
+.btn-group-attached {
+  gap: 0 !important;
+}
+
+/* Remove border radius on inner buttons */
+.btn-group-attached.btn-group-horizontal ::ng-deep .btn,
+.btn-group-attached.btn-group-horizontal ::ng-deep app-button button,
+.btn-group-attached.btn-group-horizontal ::ng-deep app-icon-button button {
+  border-radius: 0;
+}
+
+/* First button - keep left radius */
+.btn-group-attached.btn-group-horizontal ::ng-deep .btn:first-child,
+.btn-group-attached.btn-group-horizontal ::ng-deep app-button:first-child button,
+.btn-group-attached.btn-group-horizontal ::ng-deep app-icon-button:first-child button {
+  border-top-left-radius: var(--radius-md, 12px);
+  border-bottom-left-radius: var(--radius-md, 12px);
+}
+
+/* Last button - keep right radius */
+.btn-group-attached.btn-group-horizontal ::ng-deep .btn:last-child,
+.btn-group-attached.btn-group-horizontal ::ng-deep app-button:last-child button,
+.btn-group-attached.btn-group-horizontal ::ng-deep app-icon-button:last-child button {
+  border-top-right-radius: var(--radius-md, 12px);
+  border-bottom-right-radius: var(--radius-md, 12px);
+}
+
+/* Remove right border on all but last to prevent double borders */
+.btn-group-attached.btn-group-horizontal ::ng-deep .btn:not(:last-child),
+.btn-group-attached.btn-group-horizontal ::ng-deep app-button:not(:last-child) button,
+.btn-group-attached.btn-group-horizontal ::ng-deep app-icon-button:not(:last-child) button {
+  border-right-width: 0;
+}
+
+/* Vertical attached buttons */
+.btn-group-attached.btn-group-vertical ::ng-deep .btn,
+.btn-group-attached.btn-group-vertical ::ng-deep app-button button,
+.btn-group-attached.btn-group-vertical ::ng-deep app-icon-button button {
+  border-radius: 0;
+}
+
+.btn-group-attached.btn-group-vertical ::ng-deep .btn:first-child,
+.btn-group-attached.btn-group-vertical ::ng-deep app-button:first-child button,
+.btn-group-attached.btn-group-vertical ::ng-deep app-icon-button:first-child button {
+  border-top-left-radius: var(--radius-md, 12px);
+  border-top-right-radius: var(--radius-md, 12px);
+}
+
+.btn-group-attached.btn-group-vertical ::ng-deep .btn:last-child,
+.btn-group-attached.btn-group-vertical ::ng-deep app-button:last-child button,
+.btn-group-attached.btn-group-vertical ::ng-deep app-icon-button:last-child button {
+  border-bottom-left-radius: var(--radius-md, 12px);
+  border-bottom-right-radius: var(--radius-md, 12px);
+}
+
+.btn-group-attached.btn-group-vertical ::ng-deep .btn:not(:last-child),
+.btn-group-attached.btn-group-vertical ::ng-deep app-button:not(:last-child) button,
+.btn-group-attached.btn-group-vertical ::ng-deep app-icon-button:not(:last-child) button {
+  border-bottom-width: 0;
+}
+
+/* ========================================
+   Responsive Behavior
+   ======================================== */
+
+/* Wrap: Allow buttons to wrap to next line */
+.btn-group-responsive-wrap.btn-group-horizontal {
+  flex-wrap: wrap;
+}
+
+/* Scroll: Horizontal scroll on overflow */
+.btn-group-responsive-scroll.btn-group-horizontal {
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border, #E5E7EB) transparent;
+}
+
+.btn-group-responsive-scroll.btn-group-horizontal::-webkit-scrollbar {
+  height: 6px;
+}
+
+.btn-group-responsive-scroll.btn-group-horizontal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.btn-group-responsive-scroll.btn-group-horizontal::-webkit-scrollbar-thumb {
+  background: var(--color-border, #E5E7EB);
+  border-radius: var(--radius-full, 9999px);
+}
+
+.btn-group-responsive-scroll.btn-group-horizontal::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted, #6B7280);
+}
+
+/* Stack: Convert to vertical on mobile */
+@media (max-width: 768px) {
+  .btn-group-responsive-stack.btn-group-horizontal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-group-responsive-stack.btn-group-horizontal ::ng-deep .btn,
+  .btn-group-responsive-stack.btn-group-horizontal ::ng-deep app-button,
+  .btn-group-responsive-stack.btn-group-horizontal ::ng-deep app-icon-button {
+    width: 100%;
+  }
+
+  /* Adjust attached button radius on stack */
+  .btn-group-attached.btn-group-responsive-stack.btn-group-horizontal ::ng-deep .btn:first-child,
+  .btn-group-attached.btn-group-responsive-stack.btn-group-horizontal ::ng-deep app-button:first-child button,
+  .btn-group-attached.btn-group-responsive-stack.btn-group-horizontal ::ng-deep app-icon-button:first-child button {
+    border-radius: 0;
+    border-top-left-radius: var(--radius-md, 12px);
+    border-top-right-radius: var(--radius-md, 12px);
+  }
+
+  .btn-group-attached.btn-group-responsive-stack.btn-group-horizontal ::ng-deep .btn:last-child,
+  .btn-group-attached.btn-group-responsive-stack.btn-group-horizontal ::ng-deep app-button:last-child button,
+  .btn-group-attached.btn-group-responsive-stack.btn-group-horizontal ::ng-deep app-icon-button:last-child button {
+    border-radius: 0;
+    border-bottom-left-radius: var(--radius-md, 12px);
+    border-bottom-right-radius: var(--radius-md, 12px);
+  }
+
+  .btn-group-attached.btn-group-responsive-stack.btn-group-horizontal ::ng-deep .btn:not(:last-child),
+  .btn-group-attached.btn-group-responsive-stack.btn-group-horizontal ::ng-deep app-button:not(:last-child) button,
+  .btn-group-attached.btn-group-responsive-stack.btn-group-horizontal ::ng-deep app-icon-button:not(:last-child) button {
+    border-right-width: 1px;
+    border-bottom-width: 0;
+  }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-group-responsive-scroll {
+    scroll-behavior: auto;
+  }
+}
+
+/* ========================================
+   Dark Mode Support
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .btn-group-divided.btn-group-horizontal ::ng-deep .btn:not(:last-child)::after,
+  .btn-group-divided.btn-group-horizontal ::ng-deep app-button:not(:last-child)::after,
+  .btn-group-divided.btn-group-horizontal ::ng-deep app-icon-button:not(:last-child)::after,
+  .btn-group-divided.btn-group-vertical ::ng-deep .btn:not(:last-child)::after,
+  .btn-group-divided.btn-group-vertical ::ng-deep app-button:not(:last-child)::after,
+  .btn-group-divided.btn-group-vertical ::ng-deep app-icon-button:not(:last-child)::after {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}

@@ -1,0 +1,119 @@
+<div class="list-container">
+  <!-- Search Bar -->
+  @if (config().showSearch) {
+    <div class="list-search">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <input
+          type="text"
+          class="search-input"
+          [placeholder]="config().searchPlaceholder || 'Search...'"
+          [value]="searchQuery()"
+          (input)="onSearch($event)"
+          aria-label="Search items"/>
+
+        @if (searchQuery()) {
+          <button
+            class="search-clear"
+            (click)="clearSearch()"
+            type="button"
+            aria-label="Clear search">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        }
+      </div>
+
+      @if (searchQuery()) {
+        <div class="search-results-count">
+          {{ filteredItems().length }} {{ filteredItems().length === 1 ? 'result' : 'results' }}
+        </div>
+      }
+    </div>
+  }
+
+  <!-- List -->
+  <ul [class]="getListClasses()" role="list">
+    @for (item of filteredItems(); track item.id) {
+      <li
+        [class]="getItemClasses(item)"
+        (click)="onItemClick(item)"
+        [attr.aria-selected]="isSelected(item.id)"
+        [attr.aria-disabled]="item.disabled"
+        role="listitem"
+        tabindex="0"
+        (keydown.enter)="onItemClick(item)"
+        (keydown.space)="onItemClick(item)">
+
+        <!-- Selection Checkbox (if selectable) -->
+        @if (config().selectable && !item.disabled) {
+          <div class="list-item-checkbox">
+            <input
+              type="checkbox"
+              [checked]="isSelected(item.id)"
+              [attr.aria-label]="'Select ' + item.title"
+              tabindex="-1"/>
+          </div>
+        }
+
+        <!-- Icon or Avatar -->
+        @if (item.icon || item.avatar) {
+          <div class="list-item-visual">
+            @if (item.avatar) {
+              <img [src]="item.avatar" [alt]="item.title" class="list-item-avatar"/>
+            } @else if (item.icon) {
+              <span class="list-item-icon">{{ item.icon }}</span>
+            }
+          </div>
+        }
+
+        <!-- Content -->
+        <div class="list-item-content">
+          <div class="list-item-title-row">
+            <h3 class="list-item-title">{{ item.title }}</h3>
+
+            @if (item.badge) {
+              <span [class]="getBadgeClass(item.badgeType)">{{ item.badge }}</span>
+            }
+          </div>
+
+          @if (item.subtitle) {
+            <p class="list-item-subtitle">{{ item.subtitle }}</p>
+          }
+
+          @if (item.description) {
+            <p class="list-item-description">{{ item.description }}</p>
+          }
+        </div>
+
+        <!-- Arrow (for clickable items) -->
+        @if (!config().selectable && config().hoverable) {
+          <div class="list-item-arrow">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 15l5-5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        }
+      </li>
+    }
+
+    <!-- Empty State -->
+    @if (filteredItems().length === 0) {
+      <li class="list-empty">
+        <svg class="list-empty-icon" width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2"/>
+          <path d="M16 24h16M24 16v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <p class="list-empty-message">{{ config().emptyMessage || 'No items found' }}</p>
+        @if (searchQuery()) {
+          <button class="list-empty-action" (click)="clearSearch()" type="button">
+            Clear search
+          </button>
+        }
+      </li>
+    }
+  </ul>
+</div>

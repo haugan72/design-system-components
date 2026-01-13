@@ -1,0 +1,220 @@
+/* ============================================
+   Radio Button Component Styles
+   Design System A
+   ============================================ */
+
+/* ========================================
+   Container
+   ======================================== */
+
+.radio-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.radio-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   Label
+   ======================================== */
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  cursor: pointer;
+  user-select: none;
+}
+
+.radio-disabled .radio-label {
+  cursor: not-allowed;
+}
+
+/* ========================================
+   Hidden Input
+   ======================================== */
+
+.radio-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ========================================
+   Radio Button
+   ======================================== */
+
+.radio {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: var(--color-surface, #FFFFFF);
+  border: 2px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-full, 9999px);
+  transition: all var(--transition-fast, 150ms ease-in-out);
+  flex-shrink: 0;
+}
+
+.radio-input:focus-visible + .radio {
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: 2px;
+}
+
+.radio-label:hover .radio:not(.radio-disabled) {
+  border-color: var(--color-primary, #6366F1);
+}
+
+/* Checked state */
+.radio-checked {
+  border-color: var(--color-primary, #6366F1);
+}
+
+/* Error state */
+.radio-error {
+  border-color: var(--color-danger, #EF4444);
+}
+
+.radio-checked.radio-error {
+  border-color: var(--color-danger, #EF4444);
+}
+
+/* ========================================
+   Radio Dot
+   ======================================== */
+
+.radio-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary, #6366F1);
+  border-radius: var(--radius-full, 9999px);
+  animation: radio-scale-in 150ms ease-out;
+}
+
+.radio-error .radio-dot {
+  background: var(--color-danger, #EF4444);
+}
+
+@keyframes radio-scale-in {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   Text Label
+   ======================================== */
+
+.radio-text {
+  font-size: var(--text-base, 15px);
+  font-weight: var(--font-medium, 500);
+  color: var(--color-text-primary, #1F2937);
+  line-height: 1.5;
+}
+
+.radio-required {
+  color: var(--color-danger, #EF4444);
+  margin-left: 2px;
+}
+
+/* ========================================
+   Description / Help Text
+   ======================================== */
+
+.radio-description {
+  margin-left: 30px;
+  font-size: var(--text-sm, 13px);
+  line-height: 1.5;
+  color: var(--color-text-secondary, #4B5563);
+}
+
+.radio-error-message {
+  color: var(--color-danger, #EF4444);
+  font-weight: var(--font-medium, 500);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .radio {
+    width: 20px;
+    height: 20px;
+  }
+
+  .radio-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .radio-text {
+    font-size: var(--text-sm, 14px);
+  }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .radio,
+  .radio-dot {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .radio {
+    border-width: 3px;
+  }
+
+  .radio-input:focus-visible + .radio {
+    outline-width: 3px;
+  }
+}
+
+/* ========================================
+   Dark Mode Support
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .radio-text {
+    color: var(--color-text-inverse, #FFFFFF);
+  }
+
+  .radio {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .radio-checked {
+    border-color: var(--color-primary, #6366F1);
+  }
+
+  .radio-dot {
+    background: var(--color-primary, #6366F1);
+  }
+
+  .radio-description {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}

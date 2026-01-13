@@ -1,0 +1,228 @@
+/* ============================================
+   Search Box Component Styles
+   Design System A
+   ============================================ */
+
+/* ========================================
+   Container
+   ======================================== */
+
+.search-box-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  height: 48px;
+  background: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-full, 9999px);
+  transition: all var(--transition-fast, 150ms ease-in-out);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.search-box-container:hover:not(.search-box-disabled) {
+  border-color: var(--color-text-muted, #6B7280);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.search-box-focused {
+  border-color: var(--color-primary, #6366F1);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.search-box-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--color-surface-secondary, #F5F7FA);
+}
+
+/* ========================================
+   Search Icon
+   ======================================== */
+
+.search-icon {
+  position: absolute;
+  left: var(--space-4, 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--color-text-muted, #6B7280);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.search-box-focused .search-icon {
+  color: var(--color-primary, #6366F1);
+}
+
+/* ========================================
+   Input
+   ======================================== */
+
+.search-input {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--space-12, 48px) 0 var(--space-12, 48px);
+  font-size: var(--text-base, 15px);
+  font-family: inherit;
+  color: var(--color-text-primary, #1F2937);
+  background: transparent;
+  border: none;
+  border-radius: inherit;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: var(--color-text-muted, #6B7280);
+}
+
+.search-input:disabled {
+  cursor: not-allowed;
+}
+
+/* Remove default search input styling */
+.search-input::-webkit-search-decoration,
+.search-input::-webkit-search-cancel-button,
+.search-input::-webkit-search-results-button,
+.search-input::-webkit-search-results-decoration {
+  display: none;
+}
+
+/* ========================================
+   Clear Button
+   ======================================== */
+
+.search-clear-btn {
+  position: absolute;
+  right: var(--space-3, 12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  font-size: 14px;
+  color: var(--color-text-muted, #6B7280);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full, 9999px);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease-in-out);
+  z-index: 1;
+}
+
+.search-clear-btn:hover {
+  color: var(--color-text-primary, #1F2937);
+  background: var(--color-surface-secondary, #F5F7FA);
+}
+
+.search-clear-btn:focus-visible {
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: 2px;
+}
+
+.search-clear-btn:active {
+  transform: scale(0.95);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .search-box-container {
+    height: 44px;
+  }
+
+  .search-input {
+    font-size: var(--text-sm, 14px);
+  }
+
+  .search-icon {
+    font-size: 18px;
+    left: var(--space-3, 12px);
+  }
+
+  .search-input {
+    padding: 0 var(--space-10, 40px);
+  }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .search-box-container,
+  .search-clear-btn {
+    transition: none !important;
+  }
+
+  .search-clear-btn:active {
+    transform: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .search-box-container {
+    border-width: 2px;
+  }
+
+  .search-box-focused {
+    outline: 3px solid var(--color-primary, #6366F1);
+    outline-offset: 2px;
+  }
+}
+
+/* ========================================
+   Dark Mode Support
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .search-box-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .search-box-container:hover:not(.search-box-disabled) {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .search-box-focused {
+    border-color: var(--color-primary, #6366F1);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .search-box-disabled {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .search-input {
+    color: var(--color-text-inverse, #FFFFFF);
+  }
+
+  .search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .search-icon {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .search-box-focused .search-icon {
+    color: var(--color-primary, #6366F1);
+  }
+
+  .search-clear-btn {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .search-clear-btn:hover {
+    color: var(--color-text-inverse, #FFFFFF);
+    background: rgba(255, 255, 255, 0.1);
+  }
+}

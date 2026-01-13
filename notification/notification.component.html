@@ -1,0 +1,53 @@
+<!-- Notification Containers by Position -->
+@for (position of getAllPositions(); track position) {
+  <div class="notification-container" [class]="getPositionClass(position)">
+    @for (notification of getNotificationsByPosition(position); track notification.id) {
+      <div
+        class="notification"
+        [class]="'notification-' + notification.type"
+        (mouseenter)="onMouseEnter(notification.id)"
+        (mouseleave)="onMouseLeave(notification.id)"
+        role="alert"
+        [attr.aria-live]="notification.type === 'error' ? 'assertive' : 'polite'">
+
+        <!-- Icon -->
+        @if (getConfig(notification).showIcon) {
+          <div class="notification-icon">
+            {{ getIcon(notification.type) }}
+          </div>
+        }
+
+        <!-- Content -->
+        <div class="notification-content">
+          @if (notification.title) {
+            <div class="notification-title">{{ notification.title }}</div>
+          }
+          <div class="notification-message">{{ notification.message }}</div>
+        </div>
+
+        <!-- Close Button -->
+        @if (getConfig(notification).showCloseButton) {
+          <button
+            class="notification-close"
+            type="button"
+            (click)="onDismiss(notification.id)"
+            aria-label="Close notification">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="12" y1="4" x2="4" y2="12"></line>
+              <line x1="4" y1="4" x2="12" y2="12"></line>
+            </svg>
+          </button>
+        }
+
+        <!-- Progress Bar (for auto-dismiss) -->
+        @if (getConfig(notification).duration && getConfig(notification).duration! > 0) {
+          <div class="notification-progress">
+            <div
+              class="notification-progress-bar"
+              [style.animation-duration]="getConfig(notification).duration + 'ms'"></div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

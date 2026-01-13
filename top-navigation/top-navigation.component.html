@@ -1,0 +1,211 @@
+<nav
+  class="top-navigation"
+  [class.nav-sticky]="isSticky()"
+  [ngClass]="themeClass()"
+  role="navigation"
+  aria-label="Main navigation">
+
+  <div class="nav-container">
+    <!-- Left Section: Logo + Links -->
+    <div class="nav-left">
+      <!-- Logo -->
+      <button
+        class="nav-logo"
+        (click)="onLogoClick()"
+        aria-label="Home"
+        type="button">
+        @if (logo()) {
+          <img [src]="logo()" alt="Logo" class="nav-logo-image" />
+        } @else {
+          <span class="nav-logo-text">Logo</span>
+        }
+      </button>
+
+      <!-- Desktop Navigation Links -->
+      <div class="nav-links" role="menubar">
+        @for (link of links(); track link.id) {
+          <a
+            class="nav-link"
+            [class.nav-link-active]="link.active"
+            [class.nav-link-disabled]="link.disabled"
+            [href]="link.href || '#'"
+            [attr.aria-current]="link.active ? 'page' : null"
+            [attr.aria-disabled]="link.disabled || null"
+            [attr.tabindex]="link.disabled ? -1 : 0"
+            role="menuitem"
+            (click)="onLinkClick(link, $event)"
+            (keydown)="onKeyDown($event, link)">
+            @if (link.icon) {
+              <span class="nav-link-icon" aria-hidden="true">{{ link.icon }}</span>
+            }
+            <span class="nav-link-label">{{ link.label }}</span>
+          </a>
+        }
+      </div>
+    </div>
+
+    <!-- Right Section: Search + User -->
+    <div class="nav-right">
+      <!-- Search Box (Desktop) -->
+      @if (config().showSearch) {
+        <div class="nav-search" [class.nav-search-expanded]="isSearchExpanded()">
+          <div class="nav-search-input-wrapper">
+            <span class="nav-search-icon" aria-hidden="true">🔍</span>
+            <input
+              type="search"
+              class="nav-search-input"
+              placeholder="Search..."
+              [value]="currentSearchQuery()"
+              (input)="onSearchInput($event)"
+              aria-label="Search" />
+            @if (currentSearchQuery()) {
+              <button
+                class="nav-search-clear"
+                (click)="clearSearch()"
+                aria-label="Clear search"
+                type="button">
+                ✕
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Search Toggle (Mobile) -->
+      @if (config().showSearch) {
+        <button
+          class="nav-search-toggle nav-mobile-only"
+          (click)="toggleSearch()"
+          [attr.aria-expanded]="isSearchExpanded()"
+          aria-label="Toggle search"
+          type="button">
+          🔍
+        </button>
+      }
+
+      <!-- User Menu -->
+      @if (config().showUserMenu && user()) {
+        <div class="nav-user-menu">
+          <button
+            class="nav-user-button"
+            (click)="toggleUserMenu()"
+            [attr.aria-expanded]="isUserMenuOpen()"
+            aria-haspopup="true"
+            aria-label="User menu"
+            type="button">
+            @if (user()?.avatar) {
+              <img [src]="user()!.avatar" [alt]="user()!.name" class="nav-user-avatar" />
+            } @else {
+              <div class="nav-user-avatar nav-user-avatar-fallback">
+                {{ userInitials() }}
+              </div>
+            }
+          </button>
+
+          <!-- User Dropdown Menu -->
+          @if (isUserMenuOpen()) {
+            <div class="nav-user-dropdown" role="menu">
+              <!-- User Info Header -->
+              <div class="nav-user-info">
+                <div class="nav-user-name">{{ user()!.name }}</div>
+                @if (user()?.email) {
+                  <div class="nav-user-email">{{ user()!.email }}</div>
+                }
+              </div>
+
+              <!-- Menu Actions -->
+              <div class="nav-user-actions">
+                @for (action of userMenuActions(); track action.id) {
+                  @if (action.divider) {
+                    <div class="nav-user-divider" role="separator"></div>
+                  } @else {
+                    <button
+                      class="nav-user-action"
+                      (click)="onUserMenuActionClick(action)"
+                      role="menuitem"
+                      type="button">
+                      @if (action.icon) {
+                        <span class="nav-user-action-icon" aria-hidden="true">{{ action.icon }}</span>
+                      }
+                      <span>{{ action.label }}</span>
+                    </button>
+                  }
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Mobile Menu Toggle -->
+      <button
+        class="nav-mobile-toggle nav-mobile-only"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="isMobileMenuOpen()"
+        aria-label="Toggle menu"
+        type="button">
+        <span class="nav-hamburger" [class.nav-hamburger-open]="isMobileMenuOpen()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Menu -->
+  @if (isMobileMenuOpen()) {
+    <div class="nav-mobile-menu" role="menu">
+      @for (link of links(); track link.id) {
+        <a
+          class="nav-mobile-link"
+          [class.nav-mobile-link-active]="link.active"
+          [class.nav-mobile-link-disabled]="link.disabled"
+          [href]="link.href || '#'"
+          [attr.aria-current]="link.active ? 'page' : null"
+          [attr.aria-disabled]="link.disabled || null"
+          role="menuitem"
+          (click)="onLinkClick(link, $event)">
+          @if (link.icon) {
+            <span class="nav-mobile-link-icon" aria-hidden="true">{{ link.icon }}</span>
+          }
+          <span>{{ link.label }}</span>
+        </a>
+      }
+    </div>
+  }
+
+  <!-- Mobile Search (Expanded) -->
+  @if (config().showSearch && isSearchExpanded()) {
+    <div class="nav-mobile-search">
+      <div class="nav-search-input-wrapper">
+        <span class="nav-search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="search"
+          class="nav-search-input"
+          placeholder="Search..."
+          [value]="currentSearchQuery()"
+          (input)="onSearchInput($event)"
+          aria-label="Search" />
+        @if (currentSearchQuery()) {
+          <button
+            class="nav-search-clear"
+            (click)="clearSearch()"
+            aria-label="Clear search"
+            type="button">
+            ✕
+          </button>
+        }
+      </div>
+    </div>
+  }
+</nav>
+
+<!-- Overlay for closing menus -->
+@if (isUserMenuOpen() || isMobileMenuOpen()) {
+  <div
+    class="nav-overlay"
+    (click)="closeMenus()"
+    aria-hidden="true">
+  </div>
+}

@@ -1,0 +1,41 @@
+<div [ngClass]="containerClasses()">
+  <label [attr.for]="id()" class="radio-label">
+    <input
+      [id]="id()"
+      type="radio"
+      [name]="name()"
+      [value]="value()"
+      [checked]="isChecked()"
+      [disabled]="disabled()"
+      [required]="required()"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="error() || helpText() ? id() + '-desc' : null"
+      class="radio-input"
+      (change)="onSelect()"
+      (keydown)="onKeyDown($event)">
+
+    <div [ngClass]="radioClasses()">
+      @if (isChecked()) {
+        <span class="radio-dot" aria-hidden="true"></span>
+      }
+    </div>
+
+    @if (label()) {
+      <span class="radio-text">
+        {{ label() }}
+        @if (required()) {
+          <span class="radio-required" aria-label="required">*</span>
+        }
+      </span>
+    }
+  </label>
+
+  @if (error() || helpText()) {
+    <div
+      [id]="id() + '-desc'"
+      class="radio-description"
+      [class.radio-error-message]="error()">
+      {{ error() || helpText() }}
+    </div>
+  }
+</div>

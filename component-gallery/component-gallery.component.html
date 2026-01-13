@@ -1,0 +1,432 @@
+<div class="gallery-container">
+  <!-- Header -->
+  <header class="gallery-header">
+    <div class="header-content">
+      <div class="header-title-section">
+        <h1 class="gallery-title">Component Gallery</h1>
+        <p class="gallery-subtitle">
+          Explore our collection of world-class Angular components built with modern best practices
+        </p>
+      </div>
+
+      <!-- Stats Bar -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-value">{{ components().length }}</span>
+          <span class="stat-label">Components</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ categories().length - 1 }}</span>
+          <span class="stat-label">Categories</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">100%</span>
+          <span class="stat-label">Accessible</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search and Filter Bar -->
+  <div class="filter-bar">
+    <div class="search-section">
+      <div class="search-box">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search components..."
+          [value]="searchQuery()"
+          (input)="onSearch($any($event.target).value)"
+          aria-label="Search components">
+      </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="category-filters">
+      @for (category of categories(); track category.id) {
+        <button
+          class="category-chip"
+          [class.active]="selectedCategory() === category.id"
+          (click)="selectCategory(category.id)"
+          [attr.aria-pressed]="selectedCategory() === category.id"
+          type="button">
+          <span class="category-icon" aria-hidden="true">{{ category.icon }}</span>
+          <span class="category-label">{{ category.label }}</span>
+          <span class="category-count">{{ componentCountByCategory()[category.id] }}</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Results Summary -->
+  <div class="results-summary">
+    <p class="results-text">
+      Showing <strong>{{ filteredComponents().length }}</strong>
+      {{ filteredComponents().length === 1 ? 'component' : 'components' }}
+      @if (selectedCategory() !== 'all') {
+        <span> in <strong>{{ categories().find(c => c.id === selectedCategory())?.label }}</strong></span>
+      }
+      @if (searchQuery()) {
+        <span> matching "<strong>{{ searchQuery() }}</strong>"</span>
+      }
+    </p>
+  </div>
+
+  <!-- Component Grid -->
+  <div class="components-grid">
+    @for (component of filteredComponents(); track component.name) {
+      <article class="component-card">
+        <!-- Card Header -->
+        <div class="card-header">
+          <div class="card-header-left">
+            <h3 class="component-name">{{ component.name }}</h3>
+            <span
+              class="status-badge"
+              [attr.data-status]="component.status">
+              {{ component.status }}
+            </span>
+          </div>
+          <span class="component-version">v{{ component.version }}</span>
+        </div>
+
+        <!-- Card Body - Component Description -->
+        <div class="card-body">
+          <p class="component-description">{{ component.description }}</p>
+
+          <!-- Tags -->
+          <div class="component-tags">
+            @for (tag of component.tags; track tag) {
+              <span class="tag">{{ tag }}</span>
+            }
+          </div>
+        </div>
+
+        <!-- Card Preview Section -->
+        <div class="card-preview">
+          <div class="preview-label">Live Preview</div>
+
+          <!-- Component-specific previews -->
+          @switch (component.name) {
+            @case ('KPI Card') {
+              <div class="preview-grid">
+                @for (example of kpiExamples(); track example.label) {
+                  <app-kpi-card
+                    [label]="example.label"
+                    [value]="example.value"
+                    [icon]="example.icon"
+                    [trend]="example.trend"
+                    [trendDirection]="example.direction"
+                    [trendLabel]="example.trendLabel"
+                    [sparklineData]="example.showSparkline ? sampleSparklineData() : undefined"
+                    [config]="{
+                      showIcon: true,
+                      showTrend: true,
+                      showSparkline: example.showSparkline
+                    }">
+                  </app-kpi-card>
+                }
+              </div>
+            }
+
+            @case ('Data Table') {
+              <div class="preview-table">
+                <app-data-table
+                  [data]="tableData()"
+                  [columns]="tableColumns()"
+                  [config]="{striped: true, hoverable: true}"
+                  [selectable]="true"
+                  [pageSize]="3">
+                </app-data-table>
+              </div>
+            }
+
+            @case ('Form') {
+              <div class="preview-form">
+                <app-form
+                  [fields]="sampleFormFields()"
+                  [config]="{layout: 'vertical', submitLabel: 'Send Message', showReset: false}"
+                  (formSubmit)="$event">
+                </app-form>
+              </div>
+            }
+
+            @case ('Modal') {
+              <div class="preview-modal">
+                <button
+                  class="action-button action-button-primary"
+                  (click)="showDemoModal.set(true)"
+                  type="button">
+                  Open Modal Demo
+                </button>
+
+                <app-modal
+                  [isOpen]="showDemoModal()"
+                  [title]="'Example Modal'"
+                  [config]="{size: 'md'}"
+                  [primaryButtonLabel]="'Confirm'"
+                  [secondaryButtonLabel]="'Cancel'"
+                  (primaryAction)="showDemoModal.set(false)"
+                  (secondaryAction)="showDemoModal.set(false)"
+                  (close)="showDemoModal.set(false)">
+                  <p>This is an example modal dialog with smooth animations and accessibility features.</p>
+                  <p>Try pressing Escape to close or clicking outside the modal.</p>
+                </app-modal>
+              </div>
+            }
+
+            @case ('Notification') {
+              <div class="preview-notification" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button
+                  class="action-button action-button-primary"
+                  (click)="showNotification('success')"
+                  type="button">
+                  Success
+                </button>
+                <button
+                  class="action-button action-button-secondary"
+                  style="background: #EF4444; color: white; border-color: #EF4444;"
+                  (click)="showNotification('error')"
+                  type="button">
+                  Error
+                </button>
+                <button
+                  class="action-button action-button-secondary"
+                  style="background: #F59E0B; color: white; border-color: #F59E0B;"
+                  (click)="showNotification('warning')"
+                  type="button">
+                  Warning
+                </button>
+                <button
+                  class="action-button action-button-secondary"
+                  style="background: #3B82F6; color: white; border-color: #3B82F6;"
+                  (click)="showNotification('info')"
+                  type="button">
+                  Info
+                </button>
+
+                <app-notification
+                  [notifications]="demoNotifications()"
+                  (dismiss)="dismissNotification($event)">
+                </app-notification>
+              </div>
+            }
+
+            @case ('Hero') {
+              <div class="preview-hero">
+                <app-hero
+                  [title]="'Welcome to Component Gallery'"
+                  [subtitle]="'Explore our collection of reusable UI components'"
+                  [config]="{background: 'gradient', size: 'md', alignment: 'center'}"
+                  [primaryButtonLabel]="'Get Started'"
+                  [secondaryButtonLabel]="'Learn More'"
+                  (primaryAction)="viewDocumentation('Hero')"
+                  (secondaryAction)="copyImportCode('Hero')">
+                </app-hero>
+              </div>
+            }
+
+            @case ('List') {
+              <div class="preview-list">
+                <app-list
+                  [items]="sampleListItems()"
+                  [config]="{variant: 'detailed', hoverable: true, showSearch: true}"
+                  (itemClick)="viewDocumentation('List')">
+                </app-list>
+              </div>
+            }
+
+            @case ('Accordion') {
+              <div class="preview-accordion">
+                <app-accordion
+                  [items]="sampleAccordionItems()"
+                  [config]="{allowMultiple: false, animated: true, bordered: true}"
+                  (itemToggle)="viewDocumentation('Accordion')">
+                </app-accordion>
+              </div>
+            }
+
+            @case ('Currency Input') {
+              <div class="preview-form">
+                <div style="max-width: 400px;">
+                  <app-currency-input
+                    [(value)]="sampleCurrencyValue"
+                    label="Loan Amount"
+                    [required]="true"
+                    currency="kr"
+                    currencyPosition="suffix"
+                    placeholder="0"
+                    helpText="Enter amount in Norwegian kroner">
+                  </app-currency-input>
+
+                  <p style="margin-top: 12px; font-size: 0.875rem; color: #6B7280;">
+                    Current value: {{ sampleCurrencyValue() !== null ? sampleCurrencyValue() : 'null' }}
+                  </p>
+                </div>
+              </div>
+            }
+
+            @case ('Repeater Field') {
+              <div class="preview-form">
+                <app-repeater-field
+                  [config]="sampleRepeaterConfig()"
+                  [items]="sampleRepeaterItems()"
+                  label="Existing Loans"
+                  (itemsChange)="sampleRepeaterItems.set($event)">
+                </app-repeater-field>
+              </div>
+            }
+
+            @default {
+              <div class="preview-placeholder">
+                <span class="placeholder-icon">🎨</span>
+                <p class="placeholder-text">Component preview coming soon</p>
+              </div>
+            }
+          }
+        </div>
+
+        <!-- Card Actions -->
+        <div class="card-actions">
+          <button
+            class="action-button action-button-primary"
+            (click)="viewDocumentation(component.name)"
+            type="button">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6h8M4 10h8M13 1H3a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Documentation
+          </button>
+
+          <button
+            class="action-button action-button-secondary"
+            (click)="copyImportCode(component.name)"
+            type="button">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M5 12H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v1M9 5h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Copy Import
+          </button>
+
+          <button
+            class="action-button action-button-ghost"
+            (click)="showComponentDetails(component.name)"
+            type="button"
+            aria-label="View details">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zM8 11v-1M8 5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+    }
+
+    <!-- Empty State -->
+    @if (filteredComponents().length === 0) {
+      <div class="empty-state">
+        <div class="empty-state-icon">🔍</div>
+        <h3 class="empty-state-title">No components found</h3>
+        <p class="empty-state-description">
+          Try adjusting your search or filter criteria
+        </p>
+        <button
+          class="empty-state-button"
+          (click)="searchQuery.set(''); selectCategory('all')"
+          type="button">
+          Clear Filters
+        </button>
+      </div>
+    }
+  </div>
+
+  <!-- Quick Links Footer -->
+  <footer class="gallery-footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4 class="footer-title">Getting Started</h4>
+        <p class="footer-text">
+          All components are built with Angular Signals, standalone architecture,
+          and follow the Modern Business Design System.
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-title">Features</h4>
+        <ul class="footer-list">
+          <li>✓ Fully accessible (WCAG AA)</li>
+          <li>✓ TypeScript strict mode</li>
+          <li>✓ Responsive design</li>
+          <li>✓ Modern Angular practices</li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-title">Component Stats</h4>
+        <div class="footer-stats">
+          <div class="footer-stat">
+            <strong>{{ componentCountByCategory()['data-visualization'] }}</strong>
+            <span>Data Viz</span>
+          </div>
+          <div class="footer-stat">
+            <strong>{{ componentCountByCategory()['forms'] }}</strong>
+            <span>Forms</span>
+          </div>
+          <div class="footer-stat">
+            <strong>{{ componentCountByCategory()['layout'] }}</strong>
+            <span>Layout</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        Modern Business Design System · Component Library v1.0.0
+      </p>
+    </div>
+  </footer>
+</div>
+
+<!-- Component Details Modal -->
+@if (activeComponent()) {
+  <div class="modal-overlay" (click)="closeComponentDetails()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">{{ activeComponent() }}</h3>
+        <button
+          class="modal-close"
+          (click)="closeComponentDetails()"
+          type="button"
+          aria-label="Close">
+          ×
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Detailed information about {{ activeComponent() }} component.</p>
+        <p>This modal can be expanded to show:</p>
+        <ul>
+          <li>Full API documentation</li>
+          <li>Interactive code examples</li>
+          <li>Usage guidelines</li>
+          <li>Accessibility notes</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="action-button action-button-primary"
+          (click)="viewDocumentation(activeComponent()!)"
+          type="button">
+          View Full Documentation
+        </button>
+        <button
+          class="action-button action-button-secondary"
+          (click)="closeComponentDetails()"
+          type="button">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+}

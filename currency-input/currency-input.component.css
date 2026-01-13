@@ -1,0 +1,214 @@
+/* ============================================
+   Currency Input Component Styles
+   ============================================ */
+
+.currency-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+  width: 100%;
+}
+
+/* ============================================
+   Label Styles
+   ============================================ */
+
+.currency-input-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text, #1F2937);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1, 4px);
+}
+
+.currency-input-required {
+  color: var(--color-danger, #EF4444);
+  font-weight: 600;
+}
+
+/* ============================================
+   Input Wrapper & Field Styles
+   ============================================ */
+
+.currency-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.currency-input {
+  width: 100%;
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text, #1F2937);
+  background-color: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-md, 12px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Input with prefix */
+.currency-input-wrapper:has(.currency-prefix) .currency-input {
+  padding-left: 3rem;
+}
+
+/* Input with suffix */
+.currency-input-wrapper:has(.currency-suffix) .currency-input {
+  padding-right: 3rem;
+}
+
+.currency-input::placeholder {
+  color: var(--color-text-muted, #6B7280);
+  opacity: 0.6;
+}
+
+/* ============================================
+   Currency Symbol Styles
+   ============================================ */
+
+.currency-prefix,
+.currency-suffix {
+  position: absolute;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-secondary, #4B5563);
+  pointer-events: none;
+}
+
+.currency-prefix {
+  left: var(--space-4, 16px);
+}
+
+.currency-suffix {
+  right: var(--space-4, 16px);
+}
+
+/* ============================================
+   Input States
+   ============================================ */
+
+/* Focus State */
+.currency-input:focus {
+  outline: none;
+  border-color: var(--color-border-focus, #6366F1);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.currency-input-focused {
+  border-color: var(--color-border-focus, #6366F1);
+}
+
+/* Hover State */
+.currency-input:hover:not(:disabled):not(:focus) {
+  border-color: var(--color-text-muted, #6B7280);
+}
+
+/* Success State */
+.currency-input-success {
+  border-color: var(--color-success, #10B981);
+}
+
+.currency-input-success:focus {
+  border-color: var(--color-success, #10B981);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Error State */
+.currency-input-error {
+  border-color: var(--color-danger, #EF4444);
+}
+
+.currency-input-error:focus {
+  border-color: var(--color-danger, #EF4444);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Disabled State */
+.currency-input:disabled {
+  background-color: var(--color-surface-secondary, #F5F7FA);
+  color: var(--color-text-muted, #6B7280);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.currency-input-disabled {
+  opacity: 0.6;
+}
+
+/* Readonly State */
+.currency-input:read-only {
+  background-color: var(--color-surface-secondary, #F5F7FA);
+  cursor: default;
+}
+
+/* ============================================
+   Description (Help Text / Error Message)
+   ============================================ */
+
+.currency-input-description {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  margin-top: calc(var(--space-1, 4px) * -1);
+}
+
+.currency-input-help {
+  color: var(--color-text-secondary, #4B5563);
+}
+
+.currency-input-error {
+  color: var(--color-danger, #EF4444);
+  font-weight: 500;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+  .currency-input {
+    font-size: 1rem; /* Prevent zoom on iOS */
+    padding: var(--space-3, 12px);
+  }
+
+  .currency-input-wrapper:has(.currency-prefix) .currency-input {
+    padding-left: 2.5rem;
+  }
+
+  .currency-input-wrapper:has(.currency-suffix) .currency-input {
+    padding-right: 2.5rem;
+  }
+
+  .currency-prefix,
+  .currency-suffix {
+    font-size: 0.875rem;
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .currency-input {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .currency-input {
+    transition: none;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+.currency-input:focus-visible {
+  outline: 2px solid var(--color-border-focus, #6366F1);
+  outline-offset: 2px;
+}

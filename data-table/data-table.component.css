@@ -1,0 +1,363 @@
+/* ============================================
+   Data Table Component Styles
+   Design System A
+   ============================================ */
+
+/* ========================================
+   Container
+   ======================================== */
+
+.table-container {
+  position: relative;
+  background: var(--color-surface, #FFFFFF);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+  overflow: hidden;
+}
+
+.table-container.sticky-header {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* ========================================
+   Loading State
+   ======================================== */
+
+.table-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-10, 64px) var(--space-5, 24px);
+  gap: var(--space-4, 16px);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border, #E5E7EB);
+  border-top-color: var(--color-primary, #6366F1);
+  border-radius: var(--radius-full, 9999px);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: var(--text-sm, 14px);
+  color: var(--color-text-secondary, #4B5563);
+}
+
+/* ========================================
+   Error State
+   ======================================== */
+
+.table-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  padding: var(--space-5, 24px);
+  background: var(--color-danger-light, #FEE2E2);
+  border: 1px solid var(--color-danger, #EF4444);
+  border-radius: var(--radius-md, 12px);
+  margin: var(--space-4, 16px);
+}
+
+.error-icon {
+  font-size: 24px;
+  color: var(--color-danger, #EF4444);
+}
+
+.error-text {
+  font-size: var(--text-sm, 14px);
+  color: var(--color-danger, #EF4444);
+  font-weight: var(--font-medium, 500);
+}
+
+/* ========================================
+   Empty State
+   ======================================== */
+
+.table-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-10, 64px) var(--space-5, 24px);
+  gap: var(--space-3, 12px);
+}
+
+.empty-icon {
+  font-size: 48px;
+  opacity: 0.3;
+}
+
+.empty-text {
+  font-size: var(--text-base, 16px);
+  color: var(--color-text-muted, #6B7280);
+}
+
+/* ========================================
+   Table
+   ======================================== */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm, 14px);
+}
+
+/* ========================================
+   Header
+   ======================================== */
+
+.data-table thead {
+  background: var(--color-surface-secondary, #F5F7FA);
+  border-bottom: 2px solid var(--color-border, #E5E7EB);
+}
+
+.table-container.sticky-header .data-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.data-table th {
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  text-align: left;
+  font-weight: var(--font-semibold, 600);
+  color: var(--color-text-primary, #1F2937);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.data-table th.sortable {
+  cursor: pointer;
+  transition: background-color var(--transition-fast, 150ms ease-in-out);
+}
+
+.data-table th.sortable:hover {
+  background: var(--color-border-light, #F3F4F6);
+}
+
+.data-table th.sorted {
+  background: var(--color-primary-soft, #E0E7FF);
+  color: var(--color-primary, #6366F1);
+}
+
+.column-label {
+  margin-right: var(--space-2, 8px);
+}
+
+.sort-icon {
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+.data-table th.sorted .sort-icon {
+  opacity: 1;
+}
+
+/* ========================================
+   Selection Column
+   ======================================== */
+
+.select-column {
+  width: 48px;
+  text-align: center !important;
+}
+
+.select-cell {
+  text-align: center !important;
+}
+
+/* ========================================
+   Body
+   ======================================== */
+
+.data-table tbody tr {
+  border-bottom: 1px solid var(--color-border, #E5E7EB);
+  transition: background-color var(--transition-fast, 150ms ease-in-out);
+}
+
+.data-table.striped tbody tr:nth-child(even) {
+  background: var(--color-surface-secondary, #F5F7FA);
+}
+
+.data-table.hoverable tbody tr:hover {
+  background: var(--color-primary-soft, #E0E7FF);
+}
+
+.data-table tbody tr.selected {
+  background: var(--color-primary-soft, #E0E7FF);
+}
+
+.data-table tbody tr[role="button"] {
+  cursor: pointer;
+}
+
+.data-table tbody tr[role="button"]:focus-visible {
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: -2px;
+}
+
+.data-table td {
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  color: var(--color-text-primary, #1F2937);
+}
+
+.data-table.compact td,
+.data-table.compact th {
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+}
+
+.data-table.bordered {
+  border: 1px solid var(--color-border, #E5E7EB);
+}
+
+.data-table.bordered td {
+  border-right: 1px solid var(--color-border, #E5E7EB);
+}
+
+.data-table.bordered th {
+  border-right: 1px solid var(--color-border, #E5E7EB);
+}
+
+/* ========================================
+   Checkboxes
+   ======================================== */
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* ========================================
+   Pagination
+   ======================================== */
+
+.table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4, 16px);
+  border-top: 1px solid var(--color-border, #E5E7EB);
+  background: var(--color-surface-secondary, #F5F7FA);
+  gap: var(--space-4, 16px);
+}
+
+.pagination-info {
+  font-size: var(--text-sm, 14px);
+  color: var(--color-text-secondary, #4B5563);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+}
+
+.pagination-button {
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  background: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-md, 12px);
+  font-size: var(--text-sm, 14px);
+  font-weight: var(--font-medium, 500);
+  color: var(--color-text-primary, #1F2937);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease-in-out);
+}
+
+.pagination-button:hover:not(:disabled) {
+  background: var(--color-primary, #6366F1);
+  color: var(--color-text-inverse, #FFFFFF);
+  border-color: var(--color-primary, #6366F1);
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: var(--space-1, 4px);
+}
+
+.pagination-page {
+  width: 36px;
+  height: 36px;
+  background: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: var(--radius-md, 12px);
+  font-size: var(--text-sm, 14px);
+  font-weight: var(--font-medium, 500);
+  color: var(--color-text-primary, #1F2937);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease-in-out);
+}
+
+.pagination-page:hover {
+  background: var(--color-surface-secondary, #F5F7FA);
+}
+
+.pagination-page.active {
+  background: var(--color-primary, #6366F1);
+  color: var(--color-text-inverse, #FFFFFF);
+  border-color: var(--color-primary, #6366F1);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .data-table {
+    font-size: var(--text-sm, 13px);
+  }
+
+  .data-table td,
+  .data-table th {
+    padding: var(--space-2, 10px) var(--space-3, 12px);
+  }
+
+  .table-pagination {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pagination-controls {
+    justify-content: center;
+  }
+
+  .pagination-pages {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .data-table tbody tr,
+  .pagination-button,
+  .pagination-page {
+    transition: none;
+  }
+
+  .loading-spinner {
+    animation: none;
+  }
+}

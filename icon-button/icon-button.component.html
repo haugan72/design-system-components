@@ -1,0 +1,22 @@
+<button
+  [ngClass]="buttonClasses()"
+  [type]="type()"
+  [disabled]="isDisabled()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-busy]="loading() || null"
+  [attr.title]="tooltipText()"
+  (click)="onClick($event)"
+  (keydown)="onKeyDown($event)">
+
+  <!-- Loading Spinner -->
+  @if (loading()) {
+    <span class="icon-btn-spinner" aria-hidden="true"></span>
+  }
+
+  <!-- Icon -->
+  @if (!loading()) {
+    <span class="icon-btn-icon" aria-hidden="true">
+      {{ icon() }}
+    </span>
+  }
+</button>

@@ -1,0 +1,7 @@
+<div
+  [ngClass]="containerClasses()"
+  [ngStyle]="containerStyles()"
+  role="group"
+  attr.aria-orientation="{{ orientation() }}">
+  <ng-content></ng-content>
+</div>

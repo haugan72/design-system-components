@@ -1,0 +1,145 @@
+<article
+  class="kpi-card"
+  [class.clickable]="isClickable()"
+  [class.loading]="loading()"
+  [class.error]="error()"
+  [ngClass]="themeClass()"
+  [attr.tabindex]="isClickable() ? 0 : null"
+  [attr.role]="isClickable() ? 'button' : null"
+  [attr.aria-label]="label() + ': ' + value() + (trend() ? ', trend ' + trendDisplay() : '')"
+  (click)="onCardClick()"
+  (keydown)="onKeyDown($event)">
+
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="kpi-loading">
+      <div class="kpi-loading-spinner"></div>
+      <span class="kpi-loading-text">Loading...</span>
+    </div>
+  }
+
+  <!-- Error State -->
+  @else if (error()) {
+    <div class="kpi-error">
+      <span class="kpi-error-icon">⚠</span>
+      <span class="kpi-error-text">{{ error() }}</span>
+    </div>
+  }
+
+  <!-- Normal State -->
+  @else {
+    <!-- Header Section -->
+    <div class="kpi-header">
+      <div class="kpi-header-left">
+        @if (config().showIcon && icon()) {
+          <span class="kpi-icon" aria-hidden="true">{{ icon() }}</span>
+        }
+        <span class="kpi-label">{{ label() }}</span>
+      </div>
+
+      @if (showSparkline()) {
+        <div class="kpi-sparkline-mini" aria-label="Trend visualization">
+          <svg
+            viewBox="0 0 100 40"
+            preserveAspectRatio="none"
+            class="kpi-sparkline-svg">
+            <path
+              [attr.d]="sparklinePath()"
+              class="kpi-sparkline-path"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              vector-effect="non-scaling-stroke" />
+          </svg>
+        </div>
+      }
+    </div>
+
+    <!-- Value Section -->
+    <div class="kpi-body">
+      <div class="kpi-value" [attr.aria-label]="'Value: ' + value()">
+        {{ value() }}
+      </div>
+
+      @if (config().showTrend && trend() !== undefined) {
+        <button
+          class="kpi-trend"
+          [class.positive]="trendColorClass() === 'positive'"
+          [class.negative]="trendColorClass() === 'negative'"
+          [class.neutral]="trendColorClass() === 'neutral'"
+          [attr.aria-label]="'Trend: ' + trendDisplay() + ' ' + (trendLabel() || '')"
+          (click)="onTrendClick($event)"
+          type="button">
+          <span class="kpi-trend-arrow" aria-hidden="true">{{ trendArrow() }}</span>
+          <span class="kpi-trend-value">{{ trendDisplay() }}</span>
+          @if (trendLabel()) {
+            <span class="kpi-trend-label">{{ trendLabel() }}</span>
+          }
+        </button>
+      }
+    </div>
+
+    <!-- Sparkline Chart Section (Large) -->
+    @if (showSparkline()) {
+      <div class="kpi-sparkline-chart" aria-label="Detailed trend chart">
+        <svg
+          viewBox="0 0 100 40"
+          preserveAspectRatio="none"
+          class="kpi-sparkline-svg">
+          <!-- Area under the line -->
+          <defs>
+            <linearGradient id="sparklineGradient-{{ label() }}" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:currentColor;stop-opacity:0.2" />
+              <stop offset="100%" style="stop-color:currentColor;stop-opacity:0.02" />
+            </linearGradient>
+          </defs>
+
+          <path
+            [attr.d]="sparklinePath() + ' L 100,42 L 0,42 Z'"
+            [attr.fill]="'url(#sparklineGradient-' + label() + ')'"
+            class="kpi-sparkline-area" />
+
+          <!-- Line -->
+          <path
+            [attr.d]="sparklinePath()"
+            class="kpi-sparkline-path"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            vector-effect="non-scaling-stroke" />
+
+          <!-- Data points -->
+          @for (point of sparklineData(); track $index) {
+            @let x = ($index / (sparklineData()!.length - 1)) * 100;
+            @let y = 40 - (((point.value - (sparklineData()!.reduce((min, p) => Math.min(min, p.value), Infinity))) /
+                     ((sparklineData()!.reduce((max, p) => Math.max(max, p.value), -Infinity) -
+                       sparklineData()!.reduce((min, p) => Math.min(min, p.value), Infinity)) || 1)) * 36 + 2);
+            <circle
+              [attr.cx]="x"
+              [attr.cy]="y"
+              r="2"
+              fill="currentColor"
+              class="kpi-sparkline-point">
+              @if (point.label) {
+                <title>{{ point.label }}: {{ point.value }}</title>
+              }
+            </circle>
+          }
+        </svg>
+      </div>
+    }
+  }
+
+  <!-- Click indicator (for accessibility) -->
+  @if (isClickable() && !loading() && !error()) {
+    <div class="kpi-click-indicator" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  }
+</article>
