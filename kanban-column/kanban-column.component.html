@@ -1,0 +1,29 @@
+<div class="kanban-column" [attr.data-column-id]="columnId()">
+  <!-- Column Header -->
+  <div class="kanban-column-header" [ngStyle]="headerStyle()">
+    @if (icon()) {
+      <span class="column-icon" aria-hidden="true">{{ icon() }}</span>
+    }
+    <span class="column-title">{{ title() }}</span>
+    <span class="column-count" [attr.aria-label]="count() + ' items'">{{ count() }}</span>
+  </div>
+
+  <!-- Column Body (Drop Zone) -->
+  <div
+    [class]="bodyClasses()"
+    (dragover)="onDragOver($event)"
+    (dragenter)="onDragEnter($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+    role="region"
+    [attr.aria-label]="title() + ' column with ' + count() + ' items'">
+
+    <!-- Content projection for cards -->
+    <ng-content></ng-content>
+
+    <!-- Empty state slot -->
+    @if (count() === 0) {
+      <ng-content select="[empty-state]"></ng-content>
+    }
+  </div>
+</div>

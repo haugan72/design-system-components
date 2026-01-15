@@ -1,0 +1,70 @@
+/* ============================================
+   View Toggle Component Styles
+   ============================================ */
+
+.view-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-surface-secondary, #F5F7FA);
+  border-radius: var(--radius-md, 12px);
+  padding: 2px;
+}
+
+.view-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted, #6B7280);
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  transition: all var(--transition-fast, 150ms ease-in-out);
+}
+
+.view-toggle-btn:hover:not(.active) {
+  color: var(--color-text-secondary, #4B5563);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.view-toggle-btn:focus {
+  outline: none;
+}
+
+.view-toggle-btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-primary-soft, #E0E7FF);
+}
+
+.view-toggle-btn.active {
+  background: var(--color-surface, #FFFFFF);
+  color: var(--color-primary, #6366F1);
+  box-shadow: var(--shadow-sm, 0 1px 2px 0 rgba(0, 0, 0, 0.05));
+}
+
+/* Icon Wrappers */
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.icon-wrapper :deep(svg) {
+  width: 14px;
+  height: 14px;
+}
+
+.icon-emoji {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .view-toggle-btn {
+    transition: none;
+  }
+}

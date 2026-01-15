@@ -1,0 +1,49 @@
+/* ============================================
+   Kanban Board Component Styles
+   ============================================ */
+
+.kanban-board {
+  display: flex;
+  gap: var(--space-4, 16px);
+  padding: var(--space-4, 16px);
+  overflow-x: auto;
+  min-height: 400px;
+}
+
+/* Custom Horizontal Scrollbar */
+.kanban-board::-webkit-scrollbar {
+  height: 8px;
+}
+
+.kanban-board::-webkit-scrollbar-track {
+  background: var(--color-surface-secondary, #F5F7FA);
+  border-radius: 4px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+  background: var(--color-border, #E5E7EB);
+  border-radius: 4px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted, #6B7280);
+}
+
+/* Firefox Scrollbar */
+.kanban-board {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border, #E5E7EB) var(--color-surface-secondary, #F5F7FA);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .kanban-board {
+    padding: var(--space-2, 8px);
+    gap: var(--space-3, 12px);
+  }
+}
+
+/* Ensure columns don't shrink */
+.kanban-board > * {
+  flex-shrink: 0;
+}

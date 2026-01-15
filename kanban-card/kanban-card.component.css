@@ -1,0 +1,179 @@
+/* ============================================
+   Kanban Card Component Styles
+   ============================================ */
+
+.kanban-card {
+  background: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border-light, #F3F4F6);
+  border-radius: var(--radius-md, 12px);
+  padding: var(--space-3, 12px);
+  transition: all var(--transition-fast, 150ms ease-in-out);
+}
+
+.kanban-card.draggable {
+  cursor: pointer;
+}
+
+.kanban-card.draggable:hover {
+  border-color: var(--color-primary, #6366F1);
+  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.08));
+  transform: translateY(-1px);
+}
+
+.kanban-card.draggable:focus {
+  outline: none;
+  border-color: var(--color-primary, #6366F1);
+  box-shadow: 0 0 0 3px var(--color-primary-soft, #E0E7FF);
+}
+
+.kanban-card.dragging {
+  opacity: 0.5;
+  transform: rotate(2deg);
+  cursor: grabbing;
+}
+
+/* Card Header */
+.kanban-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2, 8px);
+  margin-bottom: var(--space-1, 4px);
+}
+
+.card-title {
+  font-weight: var(--font-medium, 500);
+  color: var(--color-text, #1F2937);
+  font-size: var(--text-sm, 0.875rem);
+  line-height: 1.3;
+  word-break: break-word;
+  flex: 1;
+}
+
+/* Badge Styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-2, 8px);
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: var(--font-medium, 500);
+  border-radius: var(--radius-full, 9999px);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.badge-primary {
+  background: var(--color-primary-soft, #E0E7FF);
+  color: var(--color-primary, #6366F1);
+}
+
+.badge-success {
+  background: var(--color-success-light, #D1FAE5);
+  color: var(--color-success-dark, #065F46);
+}
+
+.badge-warning {
+  background: var(--color-warning-light, #FEF3C7);
+  color: var(--color-warning-dark, #92400E);
+}
+
+.badge-danger {
+  background: var(--color-danger-light, #FEE2E2);
+  color: var(--color-danger-dark, #991B1B);
+}
+
+.badge-info {
+  background: var(--color-info-light, #DBEAFE);
+  color: var(--color-info-dark, #1E40AF);
+}
+
+.badge-neutral {
+  background: var(--color-surface-secondary, #F5F7FA);
+  color: var(--color-text-secondary, #4B5563);
+}
+
+/* Subtitle */
+.card-subtitle {
+  font-size: var(--text-xs, 0.75rem);
+  color: var(--color-text-secondary, #4B5563);
+  margin-bottom: var(--space-2, 8px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Description */
+.card-description {
+  font-size: var(--text-xs, 0.75rem);
+  color: var(--color-text-muted, #6B7280);
+  margin-bottom: var(--space-2, 8px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Card Footer (Progress) */
+.kanban-card-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  margin-top: var(--space-2, 8px);
+}
+
+.progress-container {
+  flex: 1;
+}
+
+.progress-bar-bg {
+  height: 4px;
+  background: var(--color-border-light, #F3F4F6);
+  border-radius: var(--radius-full, 9999px);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full, 9999px);
+  transition: width var(--transition-slow, 300ms ease-in-out);
+
+  /* Default (0-33%) - Red/Orange */
+  background: linear-gradient(90deg, #EF4444, #F97316);
+}
+
+/* Medium progress (34-66%) */
+.progress-bar-fill.progress-medium {
+  background: linear-gradient(90deg, #F97316, #EAB308);
+}
+
+/* High progress (67-99%) */
+.progress-bar-fill.progress-high {
+  background: linear-gradient(90deg, #EAB308, #22C55E);
+}
+
+/* Complete (100%) */
+.progress-bar-fill.complete {
+  background: linear-gradient(90deg, #10B981, #059669);
+}
+
+.progress-text {
+  font-size: 0.625rem;
+  font-weight: var(--font-semibold, 600);
+  color: var(--color-text-muted, #6B7280);
+  min-width: 28px;
+  text-align: right;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .kanban-card {
+    transition: none;
+  }
+
+  .kanban-card.dragging {
+    transform: none;
+  }
+
+  .progress-bar-fill {
+    transition: none;
+  }
+}

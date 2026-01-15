@@ -279,6 +279,76 @@
               </div>
             }
 
+            @case ('Kanban Board') {
+              <div class="preview-kanban" style="max-height: 400px; overflow: auto;">
+                <app-kanban-board
+                  [columns]="sampleKanbanColumns()"
+                  [items]="sampleKanbanItems()"
+                  [groupByField]="'status'"
+                  [cardConfig]="sampleKanbanCardConfig()"
+                  [emptyMessage]="'No items'"
+                  (itemClicked)="viewDocumentation('Kanban Board')">
+                </app-kanban-board>
+              </div>
+            }
+
+            @case ('Kanban Column') {
+              <div class="preview-kanban-column" style="display: flex; gap: 16px; padding: 16px; background: #f5f7fa; border-radius: 8px;">
+                <app-kanban-column
+                  [columnId]="'demo'"
+                  [title]="'Demo Column'"
+                  [icon]="'📋'"
+                  [count]="2">
+                  <app-kanban-card
+                    [title]="'Task 1'"
+                    [subtitle]="'user@example.com'"
+                    [badge]="{ label: 'High', variant: 'danger' }"
+                    [progress]="75">
+                  </app-kanban-card>
+                  <app-kanban-card
+                    [title]="'Task 2'"
+                    [subtitle]="'another@example.com'"
+                    [progress]="30">
+                  </app-kanban-card>
+                </app-kanban-column>
+              </div>
+            }
+
+            @case ('Kanban Card') {
+              <div class="preview-kanban-cards" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <app-kanban-card
+                  [title]="'John Doe'"
+                  [subtitle]="'john@example.com'"
+                  [description]="'Acme Corp'"
+                  [badge]="{ label: 'High', variant: 'danger' }"
+                  [progress]="75">
+                </app-kanban-card>
+                <app-kanban-card
+                  [title]="'Jane Smith'"
+                  [subtitle]="'jane@example.com'"
+                  [badge]="{ label: 'Low', variant: 'neutral' }"
+                  [progress]="100">
+                </app-kanban-card>
+                <app-kanban-card
+                  [title]="'Bob Wilson'"
+                  [subtitle]="'bob@example.com'"
+                  [progress]="25">
+                </app-kanban-card>
+              </div>
+            }
+
+            @case ('View Toggle') {
+              <div class="preview-view-toggle" style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+                <app-view-toggle
+                  [options]="sampleViewOptions()"
+                  [(value)]="sampleCurrentView">
+                </app-view-toggle>
+                <p style="font-size: 0.875rem; color: #6B7280;">
+                  Current view: <strong>{{ sampleCurrentView() }}</strong>
+                </p>
+              </div>
+            }
+
             @default {
               <div class="preview-placeholder">
                 <span class="placeholder-icon">🎨</span>

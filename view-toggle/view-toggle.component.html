@@ -1,0 +1,21 @@
+<div class="view-toggle" role="group" aria-label="View options">
+  @for (option of options(); track trackOption($index, option); let i = $index) {
+    <button
+      type="button"
+      class="view-toggle-btn"
+      [class.active]="isSelected(option.id)"
+      [title]="option.label"
+      [attr.aria-label]="option.label"
+      [attr.aria-pressed]="isSelected(option.id)"
+      [tabindex]="isSelected(option.id) ? 0 : -1"
+      (click)="select(option.id)"
+      (keydown)="onKeyDown($event, i)">
+
+      @if (isSvgIcon(option.icon)) {
+        <span class="icon-wrapper" [innerHTML]="sanitizeSvg(option.icon)"></span>
+      } @else {
+        <span class="icon-emoji">{{ option.icon }}</span>
+      }
+    </button>
+  }
+</div>

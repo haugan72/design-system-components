@@ -10,6 +10,10 @@ import { ListComponent, type ListItem } from '../list/list.component';
 import { AccordionComponent, type AccordionItem } from '../accordion/accordion.component';
 import { CurrencyInputComponent } from '../currency-input/currency-input.component';
 import { RepeaterFieldComponent, type RepeaterConfig, type RepeaterItem } from '../repeater-field/repeater-field.component';
+import { KanbanBoardComponent, type KanbanColumn, type KanbanCardConfig } from '../kanban-board/kanban-board.component';
+import { KanbanColumnComponent } from '../kanban-column/kanban-column.component';
+import { KanbanCardComponent } from '../kanban-card/kanban-card.component';
+import { ViewToggleComponent, type ViewToggleOption } from '../view-toggle/view-toggle.component';
 
 /**
  * Component metadata for gallery display
@@ -46,7 +50,7 @@ interface ComponentInfo {
 @Component({
   selector: 'app-component-gallery',
   standalone: true,
-  imports: [CommonModule, KpiCardComponent, DataTableComponent, FormComponent, ModalComponent, NotificationComponent, HeroComponent, ListComponent, AccordionComponent, CurrencyInputComponent, RepeaterFieldComponent],
+  imports: [CommonModule, KpiCardComponent, DataTableComponent, FormComponent, ModalComponent, NotificationComponent, HeroComponent, ListComponent, AccordionComponent, CurrencyInputComponent, RepeaterFieldComponent, KanbanBoardComponent, KanbanColumnComponent, KanbanCardComponent, ViewToggleComponent],
   templateUrl: './component-gallery.component.html',
   styleUrl: './component-gallery.component.css'
 })
@@ -148,6 +152,38 @@ export class ComponentGalleryComponent {
       category: 'forms',
       version: '1.0.0',
       tags: ['repeater', 'dynamic', 'array', 'multiple', 'form', 'collection'],
+      status: 'stable'
+    },
+    {
+      name: 'Kanban Board',
+      description: 'Complete Kanban board with horizontal scrolling columns and drag-and-drop support for organizing items by status.',
+      category: 'data-visualization',
+      version: '1.0.0',
+      tags: ['kanban', 'board', 'drag-drop', 'columns', 'workflow', 'status'],
+      status: 'stable'
+    },
+    {
+      name: 'Kanban Column',
+      description: 'Column container for Kanban board with drop zone functionality, header with icon and count badge.',
+      category: 'layout',
+      version: '1.0.0',
+      tags: ['kanban', 'column', 'drop-zone', 'container'],
+      status: 'stable'
+    },
+    {
+      name: 'Kanban Card',
+      description: 'Draggable card for Kanban boards with title, subtitle, badge, and progress bar support.',
+      category: 'data-visualization',
+      version: '1.0.0',
+      tags: ['kanban', 'card', 'draggable', 'item'],
+      status: 'stable'
+    },
+    {
+      name: 'View Toggle',
+      description: 'Button group for switching between view modes (e.g., table vs kanban) with icon support and keyboard navigation.',
+      category: 'navigation',
+      version: '1.0.0',
+      tags: ['toggle', 'view', 'switch', 'buttons', 'group'],
       status: 'stable'
     },
     // Add more components as they are created
@@ -381,6 +417,48 @@ export class ComponentGalleryComponent {
 
   readonly sampleRepeaterItems = signal<RepeaterItem[]>([]);
 
+  // Kanban Board Sample Data
+  readonly sampleKanbanColumns = signal<KanbanColumn[]>([
+    { id: 'todo', title: 'To Do', icon: '📋' },
+    { id: 'in-progress', title: 'In Progress', icon: '🔄' },
+    { id: 'done', title: 'Done', icon: '✅', color: '#10B981' }
+  ]);
+
+  readonly sampleKanbanItems = signal([
+    { id: 1, title: 'Design homepage', email: 'design@example.com', status: 'todo', priority: 'HIGH', progress: 0 },
+    { id: 2, title: 'Build API', email: 'api@example.com', status: 'in-progress', priority: 'MEDIUM', progress: 45 },
+    { id: 3, title: 'Write tests', email: 'test@example.com', status: 'in-progress', priority: 'LOW', progress: 70 },
+    { id: 4, title: 'Deploy app', email: 'deploy@example.com', status: 'done', priority: 'HIGH', progress: 100 }
+  ]);
+
+  readonly sampleKanbanCardConfig = signal<KanbanCardConfig>({
+    titleField: 'title',
+    subtitleField: 'email',
+    progressField: 'progress',
+    badgeField: 'priority',
+    badgeVariantMap: {
+      'LOW': 'neutral',
+      'MEDIUM': 'info',
+      'HIGH': 'danger'
+    }
+  });
+
+  // View Toggle Sample Data
+  readonly sampleViewOptions = signal<ViewToggleOption[]>([
+    {
+      id: 'table',
+      icon: '<svg viewBox="0 0 16 16" fill="none"><path d="M2 4H14M2 8H14M2 12H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+      label: 'Table View'
+    },
+    {
+      id: 'kanban',
+      icon: '<svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="4" height="12" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="6" y="2" width="4" height="8" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="11" y="2" width="4" height="10" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
+      label: 'Kanban View'
+    }
+  ]);
+
+  readonly sampleCurrentView = signal('table');
+
   // ========================================
   // Methods
   // ========================================
@@ -535,6 +613,30 @@ export class ComponentGalleryComponent {
 
 @Component({
   imports: [RepeaterFieldComponent],
+  // ...
+})`,
+      'Kanban Board': `import { KanbanBoardComponent } from './components/kanban-board';
+
+@Component({
+  imports: [KanbanBoardComponent],
+  // ...
+})`,
+      'Kanban Column': `import { KanbanColumnComponent } from './components/kanban-column';
+
+@Component({
+  imports: [KanbanColumnComponent],
+  // ...
+})`,
+      'Kanban Card': `import { KanbanCardComponent } from './components/kanban-card';
+
+@Component({
+  imports: [KanbanCardComponent],
+  // ...
+})`,
+      'View Toggle': `import { ViewToggleComponent } from './components/view-toggle';
+
+@Component({
+  imports: [ViewToggleComponent],
   // ...
 })`,
       // Add more components as they are created

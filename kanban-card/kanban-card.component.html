@@ -1,0 +1,43 @@
+<div
+  [class]="cardClasses()"
+  [attr.draggable]="draggable()"
+  (dragstart)="onDragStart($event)"
+  (dragend)="onDragEnd($event)"
+  (click)="onClick($event)"
+  role="article"
+  tabindex="0"
+  [attr.aria-label]="title()">
+
+  <!-- Card Header -->
+  <div class="kanban-card-header">
+    <span class="card-title">{{ title() }}</span>
+    @if (badge()) {
+      <span [class]="badgeClasses()">{{ badge()!.label }}</span>
+    }
+  </div>
+
+  <!-- Subtitle -->
+  @if (subtitle()) {
+    <div class="card-subtitle">{{ subtitle() }}</div>
+  }
+
+  <!-- Description -->
+  @if (description()) {
+    <div class="card-description">{{ description() }}</div>
+  }
+
+  <!-- Progress Bar -->
+  @if (showProgress()) {
+    <div class="kanban-card-footer">
+      <div class="progress-container">
+        <div class="progress-bar-bg">
+          <div
+            [class]="progressClasses()"
+            [style.width.%]="progress()">
+          </div>
+        </div>
+      </div>
+      <span class="progress-text">{{ progress() }}%</span>
+    </div>
+  }
+</div>
