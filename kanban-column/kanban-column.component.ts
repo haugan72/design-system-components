@@ -13,16 +13,18 @@ export interface KanbanDropEvent {
  * Kanban Column Component
  *
  * A column container for a Kanban board that acts as a drop zone for draggable cards.
- * Displays a header with icon, title, and item count, and a scrollable body for cards.
+ * Displays a header with title and item count, and a scrollable body for cards.
+ * Supports collapsible state for space management.
  *
  * @example
  * ```html
  * <app-kanban-column
  *   [columnId]="'lead'"
  *   [title]="'Leads'"
- *   [icon]="'🎯'"
  *   [count]="5"
- *   (itemDropped)="onItemDropped($event)">
+ *   [collapsed]="false"
+ *   (itemDropped)="onItemDropped($event)"
+ *   (toggleCollapse)="onToggleCollapse()">
  *   <app-kanban-card *ngFor="let item of items" [title]="item.name"></app-kanban-card>
  * </app-kanban-column>
  * ```
@@ -45,14 +47,17 @@ export class KanbanColumnComponent {
   /** Column header title */
   title = input.required<string>();
 
-  /** Optional icon/emoji for the header */
+  /** Optional icon for the header (deprecated - prefer no icons for clean design) */
   icon = input<string>();
 
   /** Number of items in the column */
   count = input<number>(0);
 
-  /** Optional header color accent */
+  /** Optional header color accent (deprecated - prefer card-style headers) */
   headerColor = input<string>();
+
+  /** Whether the column is collapsed */
+  collapsed = input<boolean>(false);
 
   // ========================================
   // Outputs
@@ -60,6 +65,9 @@ export class KanbanColumnComponent {
 
   /** Emitted when an item is dropped in this column */
   itemDropped = output<KanbanDropEvent>();
+
+  /** Emitted when collapse toggle is clicked */
+  toggleCollapse = output<void>();
 
   // ========================================
   // Internal State
@@ -72,6 +80,18 @@ export class KanbanColumnComponent {
   // Computed Properties
   // ========================================
 
+  /** Column CSS classes */
+  readonly columnClasses = computed(() => {
+    const classes = ['kanban-column'];
+    if (this.collapsed()) {
+      classes.push('collapsed');
+    }
+    if (this.count() === 0) {
+      classes.push('empty');
+    }
+    return classes.join(' ');
+  });
+
   /** Column body CSS classes */
   readonly bodyClasses = computed(() => {
     const classes = ['kanban-column-body'];
@@ -81,14 +101,11 @@ export class KanbanColumnComponent {
     return classes.join(' ');
   });
 
-  /** Header style with optional accent color */
-  readonly headerStyle = computed(() => {
-    const color = this.headerColor();
-    if (color) {
-      return { 'border-left': `3px solid ${color}` };
-    }
-    return {};
-  });
+  /** Handle collapse toggle click */
+  onToggleCollapse(event: MouseEvent): void {
+    event.stopPropagation();
+    this.toggleCollapse.emit();
+  }
 
   // ========================================
   // Drag and Drop Handlers

@@ -11,30 +11,67 @@
   flex-direction: column;
   max-height: calc(100vh - 320px);
   min-height: 200px;
+  transition: all 200ms ease-in-out;
 }
 
-/* Column Header */
+/* Collapsed state */
+.kanban-column.collapsed {
+  flex: 0 0 48px;
+  min-width: 48px;
+  min-height: auto;
+}
+
+.kanban-column.collapsed .kanban-column-header {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: var(--space-4, 16px) var(--space-2, 8px);
+  border-radius: var(--radius-md, 12px);
+  border-bottom: none;
+  height: auto;
+  min-height: 200px;
+}
+
+.kanban-column.collapsed .kanban-column-header .column-title {
+  transform: rotate(180deg);
+}
+
+.kanban-column.collapsed .kanban-column-header .column-count {
+  transform: rotate(180deg);
+}
+
+.kanban-column.collapsed .kanban-column-header .collapse-toggle {
+  transform: rotate(90deg);
+}
+
+/* Empty column styling */
+.kanban-column.empty:not(.collapsed) {
+  opacity: 0.75;
+}
+
+.kanban-column.empty:not(.collapsed):hover {
+  opacity: 1;
+}
+
+/* Column Header - Card Style */
 .kanban-column-header {
   display: flex;
   align-items: center;
-  gap: var(--space-2, 8px);
+  gap: var(--space-3, 12px);
   padding: var(--space-3, 12px) var(--space-4, 16px);
-  border-bottom: 1px solid var(--color-border-light, #F3F4F6);
-  font-weight: var(--font-semibold, 600);
-  font-size: var(--text-sm, 0.875rem);
-  background: var(--color-surface-secondary, #F5F7FA);
+  border-bottom: 1px solid var(--color-border-light, #E5E7EB);
+  background: var(--color-surface, #FFFFFF);
   border-radius: var(--radius-md, 12px) var(--radius-md, 12px) 0 0;
   flex-shrink: 0;
-}
-
-.column-icon {
-  font-size: 1rem;
-  line-height: 1;
+  transition: background 200ms ease-in-out;
 }
 
 .column-title {
   flex: 1;
-  color: var(--color-text, #1F2937);
+  color: var(--color-text-secondary, #6B7280);
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: var(--font-semibold, 600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -44,14 +81,52 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 24px;
-  height: 24px;
+  min-width: 22px;
+  height: 22px;
   padding: 0 var(--space-2, 8px);
-  background: var(--color-surface, #FFFFFF);
+  background: var(--color-surface-secondary, #F5F7FA);
   border-radius: var(--radius-full, 9999px);
   font-size: var(--text-xs, 0.75rem);
   font-weight: var(--font-semibold, 600);
-  color: var(--color-text-secondary, #4B5563);
+  color: var(--color-text-secondary, #6B7280);
+}
+
+/* Collapse Toggle Button */
+.collapse-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted, #6B7280);
+  border-radius: var(--radius-sm, 6px);
+  cursor: pointer;
+  opacity: 0;
+  transition: all 150ms ease-in-out;
+}
+
+.kanban-column-header:hover .collapse-toggle {
+  opacity: 1;
+}
+
+.collapse-toggle:hover {
+  background: var(--color-surface-secondary, #F5F7FA);
+  color: var(--color-text, #1F2937);
+}
+
+.collapse-toggle:focus {
+  opacity: 1;
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: 2px;
+}
+
+/* Always visible when collapsed */
+.kanban-column.collapsed .collapse-toggle {
+  opacity: 1;
 }
 
 /* Column Body */
@@ -123,6 +198,10 @@
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
+  .kanban-column {
+    transition: none;
+  }
+
   .kanban-column-body {
     transition: none;
   }

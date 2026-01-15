@@ -1,4 +1,4 @@
-import { Component, input, output, computed, signal, TemplateRef, ContentChild } from '@angular/core';
+import { Component, input, output, computed, signal, TemplateRef, ContentChild, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { KanbanColumnComponent, type KanbanDropEvent } from '../kanban-column/kanban-column.component';
 import { KanbanCardComponent, type KanbanCardBadge } from '../kanban-card/kanban-card.component';
@@ -32,6 +32,10 @@ export interface KanbanCardConfig {
   progressField?: string;
   badgeField?: string;
   badgeVariantMap?: Record<string, KanbanCardBadge['variant']>;
+  /** Field name or function to get meta info (e.g., "days in stage") */
+  metaInfoField?: string;
+  /** Custom function to compute meta info from item */
+  metaInfoFn?: (item: any) => string | undefined;
 }
 
 /**
@@ -59,7 +63,13 @@ export interface KanbanCardConfig {
   templateUrl: './kanban-board.component.html',
   styleUrl: './kanban-board.component.css'
 })
-export class KanbanBoardComponent {
+export class KanbanBoardComponent implements AfterViewInit, OnDestroy {
+  // ========================================
+  // View Children
+  // ========================================
+
+  @ViewChild('boardContainer') boardContainer?: ElementRef<HTMLElement>;
+
   // ========================================
   // Inputs
   // ========================================
@@ -103,6 +113,16 @@ export class KanbanBoardComponent {
   /** Currently dragged item for tracking source column */
   private draggedItem = signal<any>(null);
   private draggedFromColumn = signal<string>('');
+
+  /** Scroll state for navigation indicators */
+  canScrollLeft = signal(false);
+  canScrollRight = signal(false);
+
+  /** Collapsed columns tracking */
+  collapsedColumns = signal<Set<string>>(new Set());
+
+  /** Scroll observer cleanup */
+  private resizeObserver?: ResizeObserver;
 
   // ========================================
   // Computed Properties
@@ -196,6 +216,25 @@ export class KanbanBoardComponent {
   }
 
   /**
+   * Get meta info from item (e.g., "3 days in stage")
+   */
+  getCardMetaInfo(item: any): string | undefined {
+    const config = this.cardConfig();
+
+    // Use custom function if provided
+    if (config.metaInfoFn) {
+      return config.metaInfoFn(item);
+    }
+
+    // Use field if provided
+    if (config.metaInfoField) {
+      return item[config.metaInfoField];
+    }
+
+    return undefined;
+  }
+
+  /**
    * Handle card drag start
    */
   onCardDragStart(item: any, columnId: string): void {
@@ -251,5 +290,105 @@ export class KanbanBoardComponent {
    */
   trackItem(index: number, item: any): any {
     return item.id || index;
+  }
+
+  // ========================================
+  // Lifecycle Hooks
+  // ========================================
+
+  ngAfterViewInit(): void {
+    this.setupScrollObserver();
+    // Initial scroll check
+    setTimeout(() => this.updateScrollIndicators(), 100);
+  }
+
+  ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
+  }
+
+  // ========================================
+  // Scroll Navigation
+  // ========================================
+
+  /**
+   * Set up observer to track scroll state
+   */
+  private setupScrollObserver(): void {
+    if (this.boardContainer?.nativeElement) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.updateScrollIndicators();
+      });
+      this.resizeObserver.observe(this.boardContainer.nativeElement);
+    }
+  }
+
+  /**
+   * Update scroll indicator states
+   */
+  updateScrollIndicators(): void {
+    const container = this.boardContainer?.nativeElement;
+    if (!container) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = container;
+    this.canScrollLeft.set(scrollLeft > 0);
+    this.canScrollRight.set(scrollLeft + clientWidth < scrollWidth - 1);
+  }
+
+  /**
+   * Scroll the board left
+   */
+  scrollLeft(): void {
+    const container = this.boardContainer?.nativeElement;
+    if (!container) return;
+
+    container.scrollBy({ left: -300, behavior: 'smooth' });
+  }
+
+  /**
+   * Scroll the board right
+   */
+  scrollRight(): void {
+    const container = this.boardContainer?.nativeElement;
+    if (!container) return;
+
+    container.scrollBy({ left: 300, behavior: 'smooth' });
+  }
+
+  /**
+   * Handle scroll event
+   */
+  onScroll(): void {
+    this.updateScrollIndicators();
+  }
+
+  // ========================================
+  // Column Collapse
+  // ========================================
+
+  /**
+   * Toggle column collapsed state
+   */
+  toggleColumnCollapse(columnId: string): void {
+    const collapsed = new Set(this.collapsedColumns());
+    if (collapsed.has(columnId)) {
+      collapsed.delete(columnId);
+    } else {
+      collapsed.add(columnId);
+    }
+    this.collapsedColumns.set(collapsed);
+  }
+
+  /**
+   * Check if a column is collapsed
+   */
+  isColumnCollapsed(columnId: string): boolean {
+    return this.collapsedColumns().has(columnId);
+  }
+
+  /**
+   * Check if a column should auto-collapse (empty columns)
+   */
+  shouldAutoCollapse(columnId: string): boolean {
+    return this.getColumnCount(columnId) === 0 && !this.collapsedColumns().has(columnId);
   }
 }

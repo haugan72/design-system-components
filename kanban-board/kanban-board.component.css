@@ -2,12 +2,73 @@
    Kanban Board Component Styles
    ============================================ */
 
+.kanban-board-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 .kanban-board {
   display: flex;
   gap: var(--space-4, 16px);
   padding: var(--space-4, 16px);
   overflow-x: auto;
   min-height: 400px;
+  scroll-behavior: smooth;
+}
+
+/* Scroll Navigation Buttons */
+.scroll-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--color-surface, #FFFFFF);
+  color: var(--color-text-secondary, #6B7280);
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+
+.scroll-nav:hover {
+  background: var(--color-primary, #6366F1);
+  color: white;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.scroll-nav:focus {
+  outline: 2px solid var(--color-primary, #6366F1);
+  outline-offset: 2px;
+}
+
+.scroll-nav-left {
+  left: 8px;
+}
+
+.scroll-nav-right {
+  right: 8px;
+}
+
+/* Fade indicators for scroll state */
+.kanban-board.has-scroll-left {
+  mask-image: linear-gradient(to right, transparent, black 48px);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 48px);
+}
+
+.kanban-board.has-scroll-right {
+  mask-image: linear-gradient(to left, transparent, black 48px);
+  -webkit-mask-image: linear-gradient(to left, transparent, black 48px);
+}
+
+.kanban-board.has-scroll-left.has-scroll-right {
+  mask-image: linear-gradient(to right, transparent, black 48px, black calc(100% - 48px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 48px, black calc(100% - 48px), transparent);
 }
 
 /* Custom Horizontal Scrollbar */
@@ -41,9 +102,30 @@
     padding: var(--space-2, 8px);
     gap: var(--space-3, 12px);
   }
+
+  .scroll-nav {
+    width: 32px;
+    height: 32px;
+  }
+
+  .scroll-nav svg {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 /* Ensure columns don't shrink */
 .kanban-board > * {
   flex-shrink: 0;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .kanban-board {
+    scroll-behavior: auto;
+  }
+
+  .scroll-nav {
+    transition: none;
+  }
 }

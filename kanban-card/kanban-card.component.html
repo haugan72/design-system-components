@@ -26,6 +26,17 @@
     <div class="card-description">{{ description() }}</div>
   }
 
+  <!-- Meta Info (e.g., days in stage) -->
+  @if (metaInfo()) {
+    <div class="card-meta">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 6V12L16 14"/>
+      </svg>
+      {{ metaInfo() }}
+    </div>
+  }
+
   <!-- Progress Bar -->
   @if (showProgress()) {
     <div class="kanban-card-footer">

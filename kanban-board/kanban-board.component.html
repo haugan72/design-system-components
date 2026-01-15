@@ -1,37 +1,73 @@
-<div class="kanban-board" role="region" aria-label="Kanban board">
-  @for (column of columns(); track trackColumn($index, column)) {
-    <app-kanban-column
-      [columnId]="column.id"
-      [title]="column.title"
-      [icon]="column.icon"
-      [count]="getColumnCount(column.id)"
-      [headerColor]="column.color"
-      (itemDropped)="onItemDropped($event)">
+<div class="kanban-board-wrapper">
+  <!-- Left scroll indicator -->
+  @if (canScrollLeft()) {
+    <button
+      class="scroll-nav scroll-nav-left"
+      (click)="scrollLeft()"
+      aria-label="Scroll left">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18L9 12L15 6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  }
 
-      @for (item of getColumnItems(column.id); track trackItem($index, item)) {
-        <!-- Custom template or default card -->
-        @if (cardTemplate) {
-          <ng-container
-            [ngTemplateOutlet]="cardTemplate"
-            [ngTemplateOutletContext]="{ $implicit: item, column: column }">
-          </ng-container>
-        } @else {
-          <app-kanban-card
-            [title]="getCardTitle(item)"
-            [subtitle]="getCardSubtitle(item)"
-            [description]="getCardDescription(item)"
-            [progress]="getCardProgress(item)"
-            [badge]="getCardBadge(item)"
-            [data]="item"
-            (cardClick)="onCardClick($event)"
-            (dragStarted)="onCardDragStart($event, column.id)"
-            (dragEnded)="onCardDragEnd()">
-          </app-kanban-card>
+  <!-- Kanban Board -->
+  <div
+    #boardContainer
+    class="kanban-board"
+    [class.has-scroll-left]="canScrollLeft()"
+    [class.has-scroll-right]="canScrollRight()"
+    role="region"
+    aria-label="Kanban board"
+    (scroll)="onScroll()">
+
+    @for (column of columns(); track trackColumn($index, column)) {
+      <app-kanban-column
+        [columnId]="column.id"
+        [title]="column.title"
+        [count]="getColumnCount(column.id)"
+        [collapsed]="isColumnCollapsed(column.id)"
+        (itemDropped)="onItemDropped($event)"
+        (toggleCollapse)="toggleColumnCollapse(column.id)">
+
+        @for (item of getColumnItems(column.id); track trackItem($index, item)) {
+          <!-- Custom template or default card -->
+          @if (cardTemplate) {
+            <ng-container
+              [ngTemplateOutlet]="cardTemplate"
+              [ngTemplateOutletContext]="{ $implicit: item, column: column }">
+            </ng-container>
+          } @else {
+            <app-kanban-card
+              [title]="getCardTitle(item)"
+              [subtitle]="getCardSubtitle(item)"
+              [description]="getCardDescription(item)"
+              [progress]="getCardProgress(item)"
+              [badge]="getCardBadge(item)"
+              [metaInfo]="getCardMetaInfo(item)"
+              [data]="item"
+              (cardClick)="onCardClick($event)"
+              (dragStarted)="onCardDragStart($event, column.id)"
+              (dragEnded)="onCardDragEnd()">
+            </app-kanban-card>
+          }
         }
-      }
 
-      <!-- Empty state -->
-      <div empty-state>{{ emptyMessage() }}</div>
-    </app-kanban-column>
+        <!-- Empty state -->
+        <div empty-state>{{ emptyMessage() }}</div>
+      </app-kanban-column>
+    }
+  </div>
+
+  <!-- Right scroll indicator -->
+  @if (canScrollRight()) {
+    <button
+      class="scroll-nav scroll-nav-right"
+      (click)="scrollRight()"
+      aria-label="Scroll right">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
   }
 </div>

@@ -13,7 +13,7 @@ export interface KanbanCardBadge {
  * Kanban Card Component
  *
  * A draggable card for displaying items in a Kanban board column.
- * Supports title, subtitle, description, badge, and progress bar.
+ * Supports title, subtitle, description, badge, meta info, and progress bar.
  *
  * @example
  * ```html
@@ -22,6 +22,7 @@ export interface KanbanCardBadge {
  *   [subtitle]="customer.email"
  *   [description]="customer.company"
  *   [badge]="{ label: 'High', variant: 'danger' }"
+ *   [metaInfo]="'3 days in stage'"
  *   [progress]="75"
  *   [data]="customer"
  *   (cardClick)="onCardClick($event)"
@@ -52,6 +53,9 @@ export class KanbanCardComponent {
 
   /** Optional badge configuration */
   badge = input<KanbanCardBadge>();
+
+  /** Meta information (e.g., "3 days in stage") */
+  metaInfo = input<string>();
 
   /** Progress value (0-100), displays progress bar if provided */
   progress = input<number>();

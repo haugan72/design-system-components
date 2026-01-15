@@ -54,10 +54,13 @@
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 2px var(--space-2, 8px);
-  font-size: var(--text-xs, 0.75rem);
-  font-weight: var(--font-medium, 500);
-  border-radius: var(--radius-full, 9999px);
+  gap: var(--space-1, 4px);
+  padding: 3px var(--space-2, 8px);
+  font-size: 0.6875rem;
+  font-weight: var(--font-semibold, 600);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  border-radius: var(--radius-sm, 6px);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -73,13 +76,16 @@
 }
 
 .badge-warning {
-  background: var(--color-warning-light, #FEF3C7);
-  color: var(--color-warning-dark, #92400E);
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  color: #B45309;
+  border: 1px solid #FCD34D;
 }
 
 .badge-danger {
-  background: var(--color-danger-light, #FEE2E2);
-  color: var(--color-danger-dark, #991B1B);
+  background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+  color: #B91C1C;
+  border: 1px solid #F87171;
+  animation: pulse-danger 2s ease-in-out infinite;
 }
 
 .badge-info {
@@ -89,7 +95,18 @@
 
 .badge-neutral {
   background: var(--color-surface-secondary, #F5F7FA);
-  color: var(--color-text-secondary, #4B5563);
+  color: var(--color-text-muted, #6B7280);
+  border: 1px solid var(--color-border-light, #E5E7EB);
+}
+
+/* Pulse animation for urgent/danger badges */
+@keyframes pulse-danger {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+  }
 }
 
 /* Subtitle */
@@ -110,6 +127,25 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Meta Info (days in stage) */
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1, 4px);
+  font-size: 0.6875rem;
+  color: var(--color-text-muted, #6B7280);
+  margin-bottom: var(--space-2, 8px);
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  background: var(--color-surface-secondary, #F5F7FA);
+  border-radius: var(--radius-sm, 6px);
+  width: fit-content;
+}
+
+.card-meta svg {
+  flex-shrink: 0;
+  opacity: 0.7;
 }
 
 /* Card Footer (Progress) */
@@ -175,5 +211,9 @@
 
   .progress-bar-fill {
     transition: none;
+  }
+
+  .badge-danger {
+    animation: none;
   }
 }
