@@ -27,6 +27,212 @@
 }
 
 /* ========================================
+   Size Variants
+   ======================================== */
+
+/* Extra Small: Ultra-compact sizing for dense dashboards */
+.kpi-card.kpi-card-xs {
+  padding: var(--space-3, 12px);
+  gap: var(--space-2, 8px);
+  min-height: 60px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kpi-card-xs .kpi-header {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2, 8px);
+}
+
+.kpi-card-xs .kpi-header-left {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2, 8px);
+}
+
+.kpi-card-xs .kpi-icon {
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+  border-radius: var(--radius-sm, 6px);
+}
+
+.kpi-card-xs .kpi-label {
+  font-size: var(--text-xs, 12px);
+  font-weight: var(--font-medium, 500);
+}
+
+.kpi-card-xs .kpi-body {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2, 8px);
+}
+
+.kpi-card-xs .kpi-value {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.kpi-card-xs .kpi-trend {
+  padding: var(--space-1, 4px) var(--space-2, 6px);
+  font-size: var(--text-xs, 11px);
+}
+
+.kpi-card-xs .kpi-trend-arrow {
+  font-size: 10px;
+}
+
+.kpi-card-xs .kpi-sparkline-mini {
+  display: none;
+}
+
+.kpi-card-xs .kpi-sparkline-chart {
+  display: none;
+}
+
+.kpi-card-xs .kpi-click-indicator {
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+  right: var(--space-3, 12px);
+}
+
+.kpi-card-xs.clickable:hover .kpi-click-indicator {
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Small: Compact sizing for dense layouts */
+.kpi-card.kpi-card-sm {
+  padding: var(--space-4, 16px);
+  gap: var(--space-3, 12px);
+  min-height: 100px;
+}
+
+.kpi-card-sm .kpi-value {
+  font-size: 1.5rem;
+}
+
+.kpi-card-sm .kpi-label {
+  font-size: var(--text-xs, 12px);
+}
+
+.kpi-card-sm .kpi-icon {
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  border-radius: var(--radius-sm, 8px);
+}
+
+.kpi-card-sm .kpi-trend {
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  font-size: var(--text-xs, 12px);
+}
+
+.kpi-card-sm .kpi-trend-arrow {
+  font-size: 12px;
+}
+
+.kpi-card-sm .kpi-sparkline-chart {
+  height: 40px;
+}
+
+.kpi-card-sm .kpi-sparkline-mini {
+  width: 48px;
+  height: 24px;
+}
+
+.kpi-card-sm .kpi-header {
+  gap: var(--space-2, 8px);
+}
+
+.kpi-card-sm .kpi-header-left {
+  gap: var(--space-1, 4px);
+}
+
+.kpi-card-sm .kpi-body {
+  gap: var(--space-1, 4px);
+}
+
+/* Medium: Default sizing (explicit for clarity) */
+.kpi-card.kpi-card-md {
+  padding: var(--space-5, 24px);
+  gap: var(--space-4, 16px);
+  min-height: 140px;
+}
+
+.kpi-card-md .kpi-value {
+  font-size: 2rem;
+}
+
+.kpi-card-md .kpi-label {
+  font-size: var(--text-sm, 14px);
+}
+
+.kpi-card-md .kpi-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+}
+
+.kpi-card-md .kpi-sparkline-chart {
+  height: 60px;
+}
+
+/* Large: Prominent sizing for hero KPIs */
+.kpi-card.kpi-card-lg {
+  padding: var(--space-6, 32px);
+  gap: var(--space-5, 24px);
+  min-height: 200px;
+}
+
+.kpi-card-lg .kpi-value {
+  font-size: 2.5rem;
+  letter-spacing: -0.03em;
+}
+
+.kpi-card-lg .kpi-label {
+  font-size: var(--text-base, 15px);
+}
+
+.kpi-card-lg .kpi-icon {
+  width: 48px;
+  height: 48px;
+  font-size: 28px;
+  border-radius: var(--radius-lg, 16px);
+}
+
+.kpi-card-lg .kpi-trend {
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  font-size: var(--text-base, 15px);
+}
+
+.kpi-card-lg .kpi-trend-arrow {
+  font-size: 16px;
+}
+
+.kpi-card-lg .kpi-sparkline-chart {
+  height: 80px;
+}
+
+.kpi-card-lg .kpi-sparkline-mini {
+  width: 72px;
+  height: 36px;
+}
+
+.kpi-card-lg .kpi-header {
+  gap: var(--space-4, 16px);
+}
+
+.kpi-card-lg .kpi-header-left {
+  gap: var(--space-3, 12px);
+}
+
+.kpi-card-lg .kpi-body {
+  gap: var(--space-3, 12px);
+}
+
+/* ========================================
    Clickable State
    ======================================== */
 
@@ -382,39 +588,132 @@
 }
 
 /* ========================================
-   Responsive Design
+   Responsive Design (Size-Aware)
    ======================================== */
 
 @media (max-width: 768px) {
-  .kpi-card {
+  /* Extra small stays ultra-compact */
+  .kpi-card.kpi-card-xs {
+    padding: var(--space-2, 8px) var(--space-3, 12px);
+    min-height: 52px;
+  }
+
+  .kpi-card-xs .kpi-value {
+    font-size: 1.125rem;
+  }
+
+  .kpi-card-xs .kpi-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  /* Small stays compact */
+  .kpi-card.kpi-card-sm {
+    padding: var(--space-3, 12px);
+  }
+
+  .kpi-card-sm .kpi-value {
+    font-size: 1.375rem;
+  }
+
+  /* Medium reduces slightly */
+  .kpi-card.kpi-card-md {
     padding: var(--space-4, 20px);
   }
 
-  .kpi-value {
+  .kpi-card-md .kpi-value {
     font-size: 1.75rem;
   }
 
-  .kpi-icon {
+  .kpi-card-md .kpi-icon {
     width: 36px;
     height: 36px;
     font-size: 20px;
   }
 
-  .kpi-sparkline-chart {
+  .kpi-card-md .kpi-sparkline-chart {
     height: 50px;
+  }
+
+  /* Large becomes medium-ish */
+  .kpi-card.kpi-card-lg {
+    padding: var(--space-5, 24px);
+  }
+
+  .kpi-card-lg .kpi-value {
+    font-size: 2rem;
+  }
+
+  .kpi-card-lg .kpi-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+  }
+
+  .kpi-card-lg .kpi-sparkline-chart {
+    height: 60px;
   }
 }
 
 @media (max-width: 480px) {
-  .kpi-card {
+  /* Extra small becomes minimal */
+  .kpi-card.kpi-card-xs {
+    padding: var(--space-2, 8px);
+    min-height: 48px;
+    gap: var(--space-1, 4px);
+  }
+
+  .kpi-card-xs .kpi-value {
+    font-size: 1rem;
+  }
+
+  .kpi-card-xs .kpi-label {
+    font-size: 10px;
+  }
+
+  .kpi-card-xs .kpi-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+
+  /* Small becomes ultra-compact */
+  .kpi-card.kpi-card-sm {
+    padding: var(--space-3, 12px);
+  }
+
+  .kpi-card-sm .kpi-value {
+    font-size: 1.25rem;
+  }
+
+  .kpi-card-sm .kpi-sparkline-mini {
+    display: none;
+  }
+
+  /* Medium becomes small-ish */
+  .kpi-card.kpi-card-md {
     padding: var(--space-4, 16px);
   }
 
-  .kpi-value {
+  .kpi-card-md .kpi-value {
     font-size: 1.5rem;
   }
 
-  .kpi-sparkline-mini {
+  .kpi-card-md .kpi-sparkline-mini {
+    display: none;
+  }
+
+  /* Large becomes medium-ish */
+  .kpi-card.kpi-card-lg {
+    padding: var(--space-4, 20px);
+  }
+
+  .kpi-card-lg .kpi-value {
+    font-size: 1.75rem;
+  }
+
+  .kpi-card-lg .kpi-sparkline-mini {
     display: none;
   }
 }

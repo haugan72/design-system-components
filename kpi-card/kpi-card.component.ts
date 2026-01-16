@@ -12,6 +12,11 @@ export type TrendDirection = 'up' | 'down' | 'neutral';
 export type TrendType = 'positive' | 'negative';
 
 /**
+ * Card size variants
+ */
+export type KpiCardSize = 'xs' | 'sm' | 'md' | 'lg';
+
+/**
  * Data point for sparkline chart
  */
 export interface SparklineDataPoint {
@@ -107,6 +112,9 @@ export class KpiCardComponent {
   /** Error state */
   error = input<string>();
 
+  /** Card size variant */
+  size = input<KpiCardSize>('md');
+
   // ========================================
   // Outputs
   // ========================================
@@ -190,6 +198,9 @@ export class KpiCardComponent {
 
   /** Get theme class */
   readonly themeClass = computed(() => `theme-${this.config().theme || 'default'}`);
+
+  /** Get size class */
+  readonly sizeClass = computed(() => `kpi-card-${this.size()}`);
 
   // ========================================
   // Methods

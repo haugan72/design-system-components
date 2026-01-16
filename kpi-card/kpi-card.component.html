@@ -3,7 +3,7 @@
   [class.clickable]="isClickable()"
   [class.loading]="loading()"
   [class.error]="error()"
-  [ngClass]="themeClass()"
+  [ngClass]="[themeClass(), sizeClass()]"
   [attr.tabindex]="isClickable() ? 0 : null"
   [attr.role]="isClickable() ? 'button' : null"
   [attr.aria-label]="label() + ': ' + value() + (trend() ? ', trend ' + trendDisplay() : '')"

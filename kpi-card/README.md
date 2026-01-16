@@ -13,7 +13,51 @@ A world-class, professional Angular component for displaying Key Performance Ind
 - **Accessibility**: Full WCAG AA compliance with ARIA labels, keyboard navigation, and screen reader support
 - **Responsive**: Works beautifully on mobile, tablet, and desktop
 - **Theme Variants**: Multiple color themes (default, primary, success, warning, danger)
+- **Size Variants**: Three sizes (small, medium, large) for different layout contexts
 - **Modern Angular**: Uses Signals, standalone components, and input/output functions
+
+## Size Variants
+
+The component supports three size variants to accommodate different layout contexts:
+
+| Size | Use Case | Card Padding | Value Font |
+|------|----------|--------------|------------|
+| `sm` | Compact dashboards, sidebars, dense grids | 16px | 1.5rem |
+| `md` | Standard dashboards (default) | 24px | 2rem |
+| `lg` | Hero KPIs, landing pages, featured metrics | 32px | 2.5rem |
+
+### Size Examples
+
+```html
+<!-- Small: Compact for dense layouts -->
+<app-kpi-card
+  label="Active Users"
+  value="1,234"
+  size="sm">
+</app-kpi-card>
+
+<!-- Medium: Default size -->
+<app-kpi-card
+  label="Revenue"
+  value="$45.2K"
+  size="md">
+</app-kpi-card>
+
+<!-- Large: Prominent hero KPI -->
+<app-kpi-card
+  label="Total Sales"
+  value="$2.4M"
+  size="lg"
+  [config]="{showSparkline: true}">
+</app-kpi-card>
+```
+
+### Responsive Behavior
+
+Size variants gracefully degrade on smaller viewports:
+- **Desktop (>768px)**: Full size specifications
+- **Tablet (768px)**: Sizes reduce by ~15%
+- **Mobile (<480px)**: Large becomes medium, medium becomes small
 
 ## Installation
 
@@ -157,6 +201,7 @@ onTicketsClick() {
 | `config` | `KpiCardConfig` | No | See below | Component configuration |
 | `loading` | `boolean` | No | `false` | Show loading state |
 | `error` | `string` | No | - | Show error state with message |
+| `size` | `'sm' \| 'md' \| 'lg'` | No | `'md'` | Card size variant |
 
 ### KpiCardConfig
 
@@ -184,6 +229,12 @@ interface SparklineDataPoint {
   value: number;    // The numeric value
   label?: string;   // Optional label for tooltip
 }
+```
+
+### KpiCardSize
+
+```typescript
+type KpiCardSize = 'sm' | 'md' | 'lg';
 ```
 
 ## Theme Variants
